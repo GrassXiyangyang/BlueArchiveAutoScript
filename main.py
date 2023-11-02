@@ -28,13 +28,12 @@ class Main:
         self.d.double_click(x, y)
 
     def dashboard(self):
-        home.go_home(self)
         group.start(self)
-        cafe.start(self)
-        mailbox.start(self)
-        task.start(self)
-        schedule.start(self)
         shop.start(self)
+        cafe.start(self)
+        schedule.start(self)
+        task.start(self)
+        mailbox.start(self)
 
 
 def main():

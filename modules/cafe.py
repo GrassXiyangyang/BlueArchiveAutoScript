@@ -71,7 +71,7 @@ def get_cafe_money(self):
 	# 关闭获得奖励
 	ocr.close_prize_info(self)
 	# 关闭领取界面
-	self.click(903, 155)
+	self.d.click(903, 155)
 
 
 def click_girl(self: Main):
@@ -132,7 +132,7 @@ def click_girl2(self: Main, i):
 
 	# 保存处理后的图片
 
-	result = ocr.matchImg(path, GIRL_FILE, 0.1)
+	result = ocr.match_imgage(path, GIRL_FILE, 0.1)
 	for r in result:
 		x = r['result'][0]
 		y = r['result'][1]
