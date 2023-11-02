@@ -3,7 +3,7 @@ from uiautomator2 import Device
 
 from iconst.emulator import *
 from cnocr import CnOcr
-from modules import home, group, cafe, mailbox, task, schedule, shop
+from modules import group, cafe, mailbox, task, schedule, shop
 from utils import ocr
 
 

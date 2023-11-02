@@ -13,7 +13,6 @@ curse_position = {
 }
 # todo 这里让用户选择
 user_choose = {'qxn': [7, 8], 'ghn': [7, 8], 'sl_life': [5]}
-user_choose = {'qxn': [1, 2, 3], 'ghn': [1], 'sl_life': [1]}
 
 
 def start(self):
@@ -49,6 +48,7 @@ def choose_course(self):
             return
         # 返回课程
         self.click(1140, 116)
+        time.sleep(0.5)
         self.click(55, 36)
         # 等待日程页面加载
         ocr.is_schedule(self)

@@ -1,4 +1,3 @@
-import time
 from modules import home
 from utils import ocr
 

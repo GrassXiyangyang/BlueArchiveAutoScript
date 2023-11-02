@@ -5,3 +5,4 @@ cnocr>=2.2.4.1
 fuzzywuzzy~=0.18.0
 aircv~=1.4.6
 Pillow~=10.1.0
+python-Levenshtein
