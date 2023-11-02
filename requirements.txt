@@ -1,0 +1,7 @@
+numpy~=1.26.0
+uiautomator2==2.16.23
+opencv-python==4.8.0.74
+cnocr>=2.2.4.1
+fuzzywuzzy~=0.18.0
+aircv~=1.4.6
+Pillow~=10.1.0
