@@ -23,12 +23,12 @@ def start(self):
     need_goods = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
     # 商品排序,防止乱填
     need_goods.sort()
-    swip = False
+    swipe = False
     time.sleep(0.5)
     print("开始点击所需商品")
     for need in need_goods:
-        if need > 8 and not swip:
-            swip = True
+        if need > 8 and not swipe:
+            swipe = True
             self.d.swipe(933, 586, 933, 230)
             self.d.swipe(933, 586, 933, 230)
             time.sleep(0.5)
@@ -40,7 +40,7 @@ def start(self):
         time.sleep(0.2)
         self.d.click(*goods_position[need])
 
-    if not ocr.screenshot_check_text(self, '选择购买', (1116, 645, 1213, 676), False):
+    if not ocr.screenshot_check_text(self, '选择购买', (1116, 645, 1213, 676), 0):
         print("没有选中道具")
         # 返回首页
         return home.click_house(self)
@@ -49,7 +49,7 @@ def start(self):
     self.d.click(1164, 660)
 
     # 等待确认购买页面
-    ocr.screenshot_check_text(self, '是否购买', (581, 229, 698, 264), True)
+    ocr.screenshot_check_text(self, '是否购买', (581, 229, 698, 264))
 
     # 确认购买
     self.d.click(769, 484)

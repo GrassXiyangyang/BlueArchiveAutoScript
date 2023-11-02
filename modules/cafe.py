@@ -41,16 +41,16 @@ def init_window(self):
 
 
 def invite_girl(self):
-	if not ocr.screenshot_check_text(self, "可以使用", (801, 586, 875, 606), False):
+	if not ocr.screenshot_check_text(self, "可以使用", (801, 586, 875, 606), 0):
 		return
 	# 点击邀请券
 	self.click(830, 640)
 	# 等待加载邀请
-	ocr.screenshot_check_text(self, "邀请", (760, 200, 815, 236), True)
+	ocr.screenshot_check_text(self, "邀请", (760, 200, 815, 236))
 	# 邀请第一个
 	self.click(787, 221)
 	# 等待确认加载
-	ocr.screenshot_check_text(self, "确认", (727, 480, 805, 519), True)
+	ocr.screenshot_check_text(self, "确认", (727, 480, 805, 519))
 	# 点击确认
 	self.click(770, 500)
 	# 强制等待发消息邀请妹子
@@ -65,7 +65,7 @@ def get_cafe_money(self):
 	# 点击咖啡厅收益
 	self.click(1155, 645)
 	# 等待领取
-	ocr.screenshot_check_text(self, "领取", (600, 500, 678, 538), True)
+	ocr.screenshot_check_text(self, "领取", (600, 500, 678, 538))
 	# 点击领取
 	self.click(641, 516)
 	# 关闭获得奖励
@@ -132,7 +132,7 @@ def click_girl2(self: Main, i):
 
 	# 保存处理后的图片
 
-	result = ocr.match_imgage(path, GIRL_FILE, 0.1)
+	result = ocr.match_image(path, GIRL_FILE, 0.1)
 	for r in result:
 		x = r['result'][0]
 		y = r['result'][1]

@@ -11,7 +11,7 @@ def start(self):
     ocr.is_group(self)
 
     # 检查签到奖励
-    if ocr.screenshot_check_text(self, "确认", (600, 468, 682, 506), False):
+    if ocr.screenshot_check_text(self, "确认", (600, 468, 682, 506), 0):
         self.click(641, 485)
 
     # 返回首页

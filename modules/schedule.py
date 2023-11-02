@@ -27,8 +27,8 @@ def start(self):
     surplus = ocr.screenshot_get_text(self, (281, 89, 318, 112), True)
     if surplus == '0/5':
         print("没票了")
-        # home.click_house(self)
-        # return
+        home.click_house(self)
+        return
     # 选择课程
     choose_course(self)
 
@@ -38,11 +38,11 @@ def choose_course(self):
         # 点击学院
         self.click(*school_position[school])
         # 等待页面加载
-        ocr.screenshot_check_text(self, '全部日程', (1107, 646, 1222, 676), True)
+        ocr.screenshot_check_text(self, '全部日程', (1107, 646, 1222, 676))
         # 点击全部日程
         self.click(1166, 662)
         # 等待页面加载
-        ocr.screenshot_check_text(self, '全部日程', (568, 97, 717, 132), True)
+        ocr.screenshot_check_text(self, '全部日程', (568, 97, 717, 132))
         # 学习课程
         if learn_course(self, course):
             return
@@ -64,18 +64,18 @@ def learn_course(self, course):
             continue
         # 点击课程
         self.click(*curse_position[c])
-        ocr.screenshot_check_text(self, '开始日程', (570, 528, 710, 565), True)
+        ocr.screenshot_check_text(self, '开始日程', (570, 528, 710, 565))
         # 点击开始日程
         self.d.click(640, 546)
 
-        if ocr.screenshot_check_text(self, '每日入场次数已耗尽', (500, 312, 760, 350), False, 0.5):
+        if ocr.screenshot_check_text(self, '每日入场次数已耗尽', (500, 312, 760, 350), 0, 0.5):
             self.click(1233, 25, False, 3)
             home.click_house(self)
             return True
 
         # 等待日程报告
         while True:
-            if ocr.screenshot_check_text(self, '日程报告', (579, 120, 700, 150), False):
+            if ocr.screenshot_check_text(self, '日程报告', (579, 120, 700, 150), 0):
                 break
             self.click(774, 141)
             time.sleep(SS_RATE)
