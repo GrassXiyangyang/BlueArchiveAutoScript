@@ -5,7 +5,7 @@ from uiautomator2 import Device
 
 from iconst.emulator import *
 from cnocr import CnOcr
-from modules import group, cafe, mailbox, task, schedule, shop, special_entrust
+from modules import group, cafe, mailbox, task, schedule, shop, special_entrust, wanted
 from utils import ocr
 
 
@@ -34,13 +34,14 @@ class Main:
         self.d.double_click(x, y)
 
     def dashboard(self):
-        # group.start(self)
-        # shop.start(self)
-        # cafe.start(self)
-        # schedule.start(self)
+        group.start(self)
+        shop.start(self)
+        cafe.start(self)
+        schedule.start(self)
         special_entrust.start(self)
-        # task.start(self)
-        # mailbox.start(self)
+        wanted.start(self)
+        task.start(self)
+        mailbox.start(self)
 
 
 def main():
