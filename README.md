@@ -1,5 +1,7 @@
 # Blue Archive Auto Script
 
+> QQ交流群: 621628600
+
 ## Features
 
 - [x] **小组** 自动打开小组，并签到
