@@ -53,6 +53,9 @@ def recursion_click_house(self, check_text=False):
     """
     递归点击首页按钮，如果返回False则返回首页失败，反之返回首页成功
     """
+    if ocr.screenshot_check_text(self, "认证信息已超时", (529, 295, 719, 329), 0):
+        return False
+
     if ocr.is_home(self, 0):
         return True
 
