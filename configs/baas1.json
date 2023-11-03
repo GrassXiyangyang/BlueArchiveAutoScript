@@ -1,0 +1,122 @@
+{
+  "Alas": {
+    "Emulator": {
+      "Serial": "auto",
+      "PackageName": "auto"
+    },
+    "Restart": {
+      "Enable": true,
+      "NextRun": "2020-01-01 00:00:00",
+      "Interval": 3600
+    }
+  },
+  "Reward": {
+    "Mailbox": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Interval": 3600
+    },
+    "Task": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Interval": 3600
+    }
+  },
+  "Daily": {
+    "Group": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26"
+    },
+    "MomoTalk": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26"
+    },
+    "Shop": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Config": {
+        "General": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ]
+      }
+    },
+    "SpecialEntrust": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Config": {
+        "jdfy": [
+          [
+            1,
+            1
+          ]
+        ]
+      }
+    },
+    "Arena": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Interval": 3600,
+      "Config": {
+        "Mode": 1,
+        "Level": 0
+      }
+    },
+    "Wanted": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Config": {
+        "gjgl": [
+          [
+            8,
+            2
+          ]
+        ],
+        "smtl": [
+          [
+            8,
+            2
+          ]
+        ],
+        "jt": [
+          [
+            8,
+            2
+          ]
+        ]
+      }
+    },
+    "Cafe": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Interval": 3600
+    },
+    "Schedule": {
+      "Enable": true,
+      "NextRun": "2023-10-24 20:37:26",
+      "Config": {
+        "qxn": [
+          7,
+          8
+        ],
+        "ghn": [
+          7,
+          8
+        ],
+        "sl_life": [
+          5
+        ]
+      }
+    }
+  }
+}

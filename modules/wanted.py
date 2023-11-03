@@ -25,6 +25,6 @@ def start(self):
     # 等待加载
     ocr.screenshot_check_text(self, '讲堂', (1126, 506, 1222, 557))
     # 选择委托
-    special_entrust.choose_entrust(self, 'wanted')
+    special_entrust.choose_entrust(self, 'wanted', entrust_position, choose)
     # 返回首页
     home.click_house(self)

@@ -31,15 +31,15 @@ def start(self):
     # 等待加载
     ocr.screenshot_check_text(self, '信用回收', (1044, 362, 1222, 414))
     # 选择委托
-    choose_entrust(self, 'special_entrust')
+    choose_entrust(self, 'special_entrust', entrust_position, choose)
     # 返回首页
     home.click_house(self)
 
 
-def choose_entrust(self, module):
-    for entrust, level in choose.items():
+def choose_entrust(self, module, ep, c):
+    for entrust, level in c.items():
         # 选择委托
-        self.click(*entrust_position[entrust])
+        self.click(*ep[entrust])
         # 等待加载
         ocr.screenshot_check_text(self, '关卡列表', (889, 99, 979, 125))
 

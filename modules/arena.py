@@ -5,8 +5,8 @@ from utils import ocr
 
 # 策略1: 随便打
 # 策略2: 打等级比我低N级
-# choose = [1, 0]
-choose = [2, 10]
+choose = [1, 0]
+# choose = [2, 10]
 
 
 def start(self):
@@ -21,6 +21,8 @@ def start(self):
     self.click(1093, 524)
     # 等待加载
     ocr.screenshot_check_text(self, '战术对抗赛', (102, 6, 248, 41))
+
+    # 检测已有冷却... todo
 
     # 开始战斗
     fight(self)
@@ -48,7 +50,7 @@ def fight(self, wait=False):
         return
     if wait:
         # 战斗等待1分钟
-        time.sleep(55)
+        time.sleep(52)
     # 选择对手
     choose_enemy(self)
     # 编队
@@ -58,7 +60,7 @@ def fight(self, wait=False):
     # 出击
     self.double_click(1175, 665, True, 1, 1)
     # 等待结果
-    ocr.screenshot_check_text(self, '确认', (555, 516, 733, 567))  # 确认战斗结果
+    ocr.screenshot_check_text(self, '确认', (550, 439, 733, 567))  # 确认战斗结果
     # 确认结果
     self.d.click(646, 526)
     for i in range(2):

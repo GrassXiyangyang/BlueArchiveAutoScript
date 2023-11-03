@@ -48,7 +48,7 @@ def choose_course(self):
             return
         # 返回课程
         self.click(1140, 116)
-        time.sleep(0.5)
+        time.sleep(1)
         self.click(55, 36)
         # 等待日程页面加载
         ocr.is_schedule(self)
