@@ -31,12 +31,12 @@ def start(self):
     # 等待加载
     ocr.screenshot_check_text(self, '信用回收', (1044, 362, 1222, 414))
     # 选择委托
-    choose_entrust(self)
+    choose_entrust(self, 'special_entrust')
     # 返回首页
     home.click_house(self)
 
 
-def choose_entrust(self):
+def choose_entrust(self, module):
     for entrust, level in choose.items():
         # 选择委托
         self.click(*entrust_position[entrust])
@@ -63,11 +63,18 @@ def choose_entrust(self):
             self.click(1034, 299, False, lv[1] - 1, 0.6)
             # 点击开始扫荡
             self.d.click(938, 403)
-            # 查看体力是否足够
-            if ocr.screenshot_check_text(self, '是否购买', (515, 227, 627, 260), 0, 0.5):
-                # 关闭弹窗 返回首页
-                self.click(1236, 25, 0, 2)
-                return
+            if module == 'special_entrust':
+                # 查看体力是否足够
+                if ocr.screenshot_check_text(self, '是否购买', (515, 227, 627, 260), 0, 0.5):
+                    # 关闭弹窗 返回首页
+                    self.click(1236, 25, 0, 2)
+                    return
+            else:
+                # 查看入场券是否足够
+                if ocr.screenshot_check_text(self, '移动', (730, 485, 803, 516), 0, 0.5):
+                    # 关闭弹窗 返回首页
+                    self.click(1236, 25, 0, 2)
+                    return
             # 等待确认加载
             ocr.screenshot_check_text(self, '通知', (599, 144, 675, 178))
             # 确认扫荡
@@ -86,4 +93,7 @@ def choose_entrust(self):
         # 返回到委托页面
         self.click(58, 36)
         # 等待加载
-        ocr.screenshot_check_text(self, '信用回收', (1044, 362, 1222, 414))
+        if module == 'special_entrust':
+            ocr.screenshot_check_text(self, '信用回收', (1044, 362, 1222, 414))
+        else:
+            ocr.screenshot_check_text(self, '讲堂', (1126, 506, 1222, 557))
