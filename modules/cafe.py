@@ -65,7 +65,7 @@ def invite_girl(self):
 
 def get_cafe_money(self):
     # 查看收益
-    surplus = float(ocr.screenshot_get_text(self, (1095, 641, 1160, 671), True))
+    surplus = float(ocr.screenshot_get_text(self, (1095, 641, 1160, 671)))
     if surplus == 0:
         return
     # 点击咖啡厅收益

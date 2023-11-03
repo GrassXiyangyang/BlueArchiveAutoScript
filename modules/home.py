@@ -60,7 +60,7 @@ def recursion_click_house(self, check_text=False):
         return True
 
     if check_text:
-        menu = ocr.screenshot_get_text(self, (97, 2, 368, 40), False)
+        menu = ocr.screenshot_get_text(self, (97, 2, 368, 40), 0)
         if menu == "":
             self.d.click(355, 22)
             return recursion_click_house(self, False)

@@ -39,7 +39,7 @@ def wait_loading(self):
     return True
 
 
-def screenshot_get_text(self, area, wait=True, ocr=None):
+def screenshot_get_text(self, area, ocr=None, wait=99999):
     # 检查文字前，等待加载完成
     wait_loading(self)
     if not os.path.exists(SS_PATH):
@@ -51,8 +51,8 @@ def screenshot_get_text(self, area, wait=True, ocr=None):
         out = self.ocr.ocr(path)
     else:
         out = ocr.ocr(path)
-    if len(out) == 0 and wait:
-        return screenshot_get_text(self, area, wait)
+    if len(out) == 0 and wait > 0:
+        return screenshot_get_text(self, area, ocr, wait)
     if len(out) == 0:
         return ''
     return out[0]['text']
@@ -105,7 +105,7 @@ def check_rgb(self, area, rgb):
 
 def check_one_key_active(self, area=(1090, 683, 1091, 684)):
     """
-    判断右下角<一键领取>是否可点击
+    判断按钮颜色是否可点击
     """
     screenshot_check_text(self, '', area, 0)
     path = SS_PATH + SS_FILE

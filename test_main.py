@@ -1,3 +1,4 @@
+import time
 import unittest
 
 import uiautomator2 as u2
@@ -13,8 +14,9 @@ class TestMain(unittest.TestCase):
         self.d = u2.connect(EMULATOR)
         self.ocr = CnOcr()
         self.ocrEN = CnOcr(det_model_name='en_PP-OCRv3_det', rec_model_name='en_PP-OCRv3')
-        screenshot_check_text(self, "沙勒附属咖啡厅", (473, 593,757, 644), 0)
-        print(111)
+        self.ocrNum = CnOcr(det_model_name='number-densenet_lite_136-fc', rec_model_name='number-densenet_lite_136-fc')
+        screenshot_check_text(self, "", (1090, 683, 1190, 720), 0)
+        print(self.ocr.ocr(SS_PATH + SS_FILE))
 
     def test_fuzz(self):
         str1 = "POwLO8Olagooo"

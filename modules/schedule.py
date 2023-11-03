@@ -24,7 +24,7 @@ def start(self):
     ocr.is_schedule(self)
 
     # 检查余票
-    surplus = ocr.screenshot_get_text(self, (281, 89, 318, 112), True)
+    surplus = ocr.screenshot_get_text(self, (281, 89, 318, 112))
     if surplus == '0/5':
         print("没票了")
         home.click_house(self)
