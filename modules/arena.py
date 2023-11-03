@@ -25,12 +25,12 @@ def start(self):
     # 开始战斗
     fight(self)
 
-    if ocr.check_one_key_active(self, (320, 400, 321, 401)):
+    if ocr.check_rgb_similar(self, (320, 400, 321, 401)):
         # 领取时间奖励
         self.click(353, 385)
         # 关闭奖励
         ocr.close_prize_info(self)
-    if ocr.check_one_key_active(self, (330, 480, 331, 481)):
+    if ocr.check_rgb_similar(self, (330, 480, 331, 481)):
         # 领取挑战奖励
         self.click(348, 465)
         # 关闭奖励

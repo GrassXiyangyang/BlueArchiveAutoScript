@@ -49,10 +49,13 @@ def click_house(self):
     self.click(851, 262, False, 2)
 
 
-def recursion_click_house(self, check_text=False):
+def recursion_click_house(self, check_text=False, fail_count=0):
     """
     递归点击首页按钮，如果返回False则返回首页失败，反之返回首页成功
     """
+    # 多次返回失败
+    if fail_count >= 5:
+        return False
     if ocr.screenshot_check_text(self, "认证信息已超时", (529, 295, 719, 329), 0):
         return False
 
@@ -63,7 +66,7 @@ def recursion_click_house(self, check_text=False):
         menu = ocr.screenshot_get_text(self, (97, 2, 368, 40), 0)
         if menu == "":
             self.d.click(355, 22)
-            return recursion_click_house(self, False)
+            return recursion_click_house(self, False, fail_count + 1)
 
     # 查看是否有首页按钮
     path = SS_PATH + SS_FILE
@@ -76,4 +79,4 @@ def recursion_click_house(self, check_text=False):
     self.click(1236, 25)
     # 重新检查
     time.sleep(1)
-    return recursion_click_house(self)
+    return recursion_click_house(self, check_text, fail_count + 1)

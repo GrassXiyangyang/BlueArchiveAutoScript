@@ -5,7 +5,7 @@ from uiautomator2 import Device
 
 from iconst.emulator import *
 from cnocr import CnOcr
-from modules import group, cafe, mailbox, task, schedule, shop, special_entrust, wanted, arena
+from modules import group, cafe, mailbox, task, schedule, shop, special_entrust, wanted, arena, momo_talk
 from utils import ocr
 
 
@@ -42,6 +42,7 @@ class Main:
 
     def dashboard(self):
         group.start(self)
+        momo_talk.start(self)
         shop.start(self)
         cafe.start(self)
         schedule.start(self)

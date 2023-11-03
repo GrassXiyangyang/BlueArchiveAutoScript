@@ -10,7 +10,7 @@ def start(self):
     # 等待信箱页面加载
     ocr.is_mailbox(self)
 
-    if ocr.check_one_key_active(self):
+    if ocr.check_rgb_similar(self):
         print("开始领取奖励")
         # 点击一键领取
         self.click(1136, 669)

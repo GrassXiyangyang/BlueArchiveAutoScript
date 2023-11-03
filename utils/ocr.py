@@ -58,7 +58,7 @@ def screenshot_get_text(self, area, ocr=None, wait=99999):
     return out[0]['text']
 
 
-def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0):
+def screenshot_cut(self, area, before_wait=0):
     if before_wait > 0:
         time.sleep(before_wait)
     # 检查文字前，等待加载完成
@@ -73,7 +73,11 @@ def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0):
         ss = self.d.screenshot()
         img = ss.crop(area)
         img.save(path)
-    out = self.ocr.ocr(path)
+    return self.ocr.ocr(path)
+
+
+def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0):
+    out = screenshot_cut(self, area, before_wait)
     ex = any(map(lambda d: fuzz.ratio(d.get('text'), text) > 60, out))
     print("判断是否 为", text, "结果", ex)
     print("\t\t\t", out)
@@ -84,6 +88,24 @@ def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0):
     if wait < 99999:
         wait -= 1
     return screenshot_check_text(self, text, area, wait)
+
+
+def screenshot_momo_talk(self, text, area=(), wait=99999, before_wait=0):
+    out = screenshot_cut(self, area, before_wait)
+    print("\t\t\t", out)
+    for t in out:
+        if fuzz.ratio(t.get('text'), text) <= 60:
+            continue
+        print("判断是否 为", text, "结果", True)
+        return True, t.get('position')
+    print("判断是否 为", text, "结果", False)
+    # 不需要等待直接返回结果
+    if wait == 0:
+        return False, ()
+    time.sleep(SS_RATE)
+    if wait < 99999:
+        wait -= 1
+    return screenshot_momo_talk(self, text, area, wait)
 
 
 def color_distance(rgb1, rgb2):
@@ -103,14 +125,14 @@ def check_rgb(self, area, rgb):
     return np.array_equal(img[0][0], np.array(rgb))
 
 
-def check_one_key_active(self, area=(1090, 683, 1091, 684)):
+def check_rgb_similar(self, area=(1090, 683, 1091, 684), rgb=(75, 238, 249)):
     """
-    判断按钮颜色是否可点击
+    判断颜色是否相近，用来判断按钮是否可以点击
     """
     screenshot_check_text(self, '', area, 0)
     path = SS_PATH + SS_FILE
     img = cv2.imread(path)
-    dist = color_distance(img[0][0], (75, 238, 249))
+    dist = color_distance(img[0][0], rgb)
     return dist <= 20
 
 
