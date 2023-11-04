@@ -12,11 +12,6 @@ level_position = {
     5: (1116, 330), 6: (1116, 430), 7: (1116, 530), 8: (1116, 630),
 }
 
-choose = {
-    'jdfy': [[1, 1]],
-    # 'xyhs': [[7, 1]]
-}
-
 
 def start(self):
     # 回到首页
@@ -31,69 +26,68 @@ def start(self):
     # 等待加载
     ocr.screenshot_check_text(self, '信用回收', (1044, 362, 1222, 414))
     # 选择委托
-    choose_entrust(self, 'special_entrust', entrust_position, choose)
+    choose_entrust(self, entrust_position)
     # 返回首页
     home.click_house(self)
 
 
-def choose_entrust(self, module, ep, c):
-    for entrust, level in c.items():
+def choose_entrust(self, position):
+    for tk in self.tc['config']:
         # 选择委托
-        self.click(*ep[entrust])
+        self.click(*position[tk['entrust']])
         # 等待加载
         ocr.screenshot_check_text(self, '关卡列表', (889, 99, 979, 125))
 
         part1_swipe = False
         part2_swipe = False
 
-        for lv in level:
-            if lv[0] <= 4 and not part1_swipe:
-                part1_swipe = True
-                self.d.swipe(933, 230, 933, 586)
-                time.sleep(0.5)
-            if lv[0] >= 5 and not part2_swipe:
-                part2_swipe = True
-                self.d.swipe(933, 586, 933, 230)
-                time.sleep(0.5)
-            # 点击关卡
-            self.click(*level_position[lv[0]])
-            # 等等关卡加载
-            ocr.screenshot_check_text(self, '任务信息', (574, 122, 709, 155))
-            # 扫荡指定次数
-            self.click(1034, 299, False, lv[1] - 1, 0.6)
-            # 点击开始扫荡
-            self.d.click(938, 403)
-            if module == 'special_entrust':
-                # 查看体力是否足够
-                if ocr.screenshot_check_text(self, '是否购买', (515, 227, 627, 260), 0, 0.5):
-                    # 关闭弹窗 返回首页
-                    self.click(1236, 25, 0, 2)
-                    return
-            else:
-                # 查看入场券是否足够
-                if ocr.screenshot_check_text(self, '移动', (730, 485, 803, 516), 0, 0.5):
-                    # 关闭弹窗 返回首页
-                    self.click(1236, 25, 0, 2)
-                    return
-            # 等待确认加载
-            ocr.screenshot_check_text(self, '通知', (599, 144, 675, 178))
-            # 确认扫荡
-            self.d.click(770, 500)
-            # 检查跳过,最多检查30次
-            if lv[1] >= 3:
-                ocr.screenshot_check_text(self, '跳过', (600, 488, 684, 526), 30)
-                # 点击跳过
-                self.d.click(641, 504)
-            # 等待结算
-            ocr.screenshot_check_text(self, '确认', (597, 562, 680, 600))
-            # 确认奖励
-            self.d.click(641, 580)
-            # 关闭关卡信息
-            self.d.click(1084, 138)
+        if tk['stage'] <= 4 and not part1_swipe:
+            part1_swipe = True
+            self.d.swipe(933, 230, 933, 586)
+            time.sleep(0.5)
+        if tk['stage'] >= 5 and not part2_swipe:
+            part2_swipe = True
+            self.d.swipe(933, 586, 933, 230)
+            time.sleep(0.5)
+        # 点击关卡
+        self.click(*level_position[tk['stage']])
+        # 等等关卡加载
+        ocr.screenshot_check_text(self, '任务信息', (574, 122, 709, 155))
+        # 扫荡指定次数
+        self.click(1034, 299, False, tk['count'] - 1, 0.6)
+        # 点击开始扫荡
+        self.d.click(938, 403)
+        if self.tc['task'] == 'special_entrust':
+            # 查看体力是否足够
+            if ocr.screenshot_check_text(self, '是否购买', (515, 227, 627, 260), 0, 0.5):
+                # 关闭弹窗 返回首页
+                self.click(1236, 25, 0, 2)
+                return
+        else:
+            # 查看入场券是否足够
+            if ocr.screenshot_check_text(self, '移动', (730, 485, 803, 516), 0, 0.5):
+                # 下一个
+                continue
+        # 等待确认加载
+        ocr.screenshot_check_text(self, '通知', (599, 144, 675, 178))
+        # 确认扫荡
+        self.d.click(770, 500)
+        # 检查跳过,最多检查30次
+        if tk['count'] >= 3:
+            ocr.screenshot_check_text(self, '跳过', (600, 488, 684, 526), 30)
+            # 点击跳过
+            self.d.click(641, 504)
+        # 等待结算
+        ocr.screenshot_check_text(self, '确认', (597, 562, 680, 600))
+        # 确认奖励
+        self.d.click(641, 580)
+        # 关闭关卡信息
+        self.d.click(1084, 138)
         # 返回到委托页面
+        time.sleep(1)
         self.click(58, 36)
         # 等待加载
-        if module == 'special_entrust':
+        if self.tc['task'] == 'special_entrust':
             ocr.screenshot_check_text(self, '信用回收', (1044, 362, 1222, 414))
         else:
             ocr.screenshot_check_text(self, '讲堂', (1126, 506, 1222, 557))

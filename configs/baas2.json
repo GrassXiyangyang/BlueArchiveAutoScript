@@ -1,0 +1,141 @@
+{
+    "baas": {
+        "serial": "emulator-5554",
+        "package": "com.RoamingStar.BlueArchive",
+        "ss_rate": 0.1
+    },
+    "cafe": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "interval": 3600
+    },
+    "shop": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "shop": "general",
+                "enable": true,
+                "count": 3,
+                "_surplus": 0,
+                "_prev_date": "1105",
+                "goods": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                ]
+            },
+            {
+                "shop": "arena",
+                "enable": true,
+                "count": 1,
+                "_surplus": 0,
+                "_prev_date": "1105",
+                "goods": [
+                    4,
+                    5
+                ]
+            }
+        ]
+    },
+    "schedule": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "schedule": "qxn",
+                "stage": [
+                    5,
+                    6
+                ]
+            },
+            {
+                "schedule": "ghn",
+                "stage": [
+                    6,
+                    7
+                ]
+            },
+            {
+                "schedule": "sl_life",
+                "stage": [
+                    5
+                ]
+            }
+        ]
+    },
+    "group": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00"
+    },
+    "wanted": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "entrust": "gjgl",
+                "stage": 8,
+                "count": 2
+            },
+            {
+                "entrust": "smtl",
+                "stage": 8,
+                "count": 2
+            },
+            {
+                "entrust": "jt",
+                "stage": 8,
+                "count": 2
+            }
+        ]
+    },
+    "special_entrust": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "entrust": "jdfy",
+                "stage": 1,
+                "count": 1
+            }
+        ]
+    },
+    "arena": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "interval": 3600,
+        "config": {
+            "mode": 2,
+            "level": 2
+        }
+    },
+    "task": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "interval": 3600
+    },
+    "momo_talk": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "interval": 3600
+    },
+    "mailbox": {
+        "enable": true,
+        "next": "2021-10-24 20:37:26",
+        "interval": 3600
+    },
+    "restart": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "interval": 3600
+    }
+}

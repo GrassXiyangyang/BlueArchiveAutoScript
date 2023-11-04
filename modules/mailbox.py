@@ -14,6 +14,7 @@ def start(self):
         print("开始领取奖励")
         # 点击一键领取
         self.click(1136, 669)
+        # todo 库存满了弹窗
         # 关闭获得奖励
         ocr.close_prize_info(self)
     else:

@@ -9,8 +9,7 @@ import aircv as ac
 
 
 def screenshot(self):
-    path = SS_PATH + SS_FILE
-    self.d.screenshot(path)
+    self.d.screenshot(SS_FILE)
 
 
 def wait_loading(self):
@@ -19,11 +18,10 @@ def wait_loading(self):
     """
     if not os.path.exists(SS_PATH):
         os.makedirs(SS_PATH)
-    path = SS_PATH + SS_FILE
     ss = self.d.screenshot()
     img = ss.crop((925, 650, 1170, 685))
-    img.save(path)
-    out = self.ocrEN.ocr(path)
+    img.save(SS_FILE)
+    out = self.ocrEN.ocr(SS_FILE)
     text = "Now Loading"
     ex = any(map(lambda d: fuzz.ratio(d.get('text'), text) > 20, out))
     print("判断是否 为", text, "结果", ex)
@@ -31,7 +29,7 @@ def wait_loading(self):
     # 如果找到加载继续等待
     if ex:
         print("\t\t\t正在加载..............")
-        time.sleep(SS_RATE)
+        time.sleep(self.bc['baas']['ss_rate'])
         return wait_loading(self)
     # 因为ba的loading会转动,可能会识别不到,所以需要连续两次判定为未加载
     # if i < 2:
@@ -44,13 +42,12 @@ def screenshot_get_text(self, area, ocr=None, wait=99999):
     wait_loading(self)
     if not os.path.exists(SS_PATH):
         os.makedirs(SS_PATH)
-    path = SS_PATH + SS_FILE
     img = self.d.screenshot().crop(area)
-    img.save(path)
+    img.save(SS_FILE)
     if ocr is None:
-        out = self.ocr.ocr(path)
+        out = self.ocr.ocr(SS_FILE)
     else:
-        out = ocr.ocr(path)
+        out = ocr.ocr(SS_FILE)
     if len(out) == 0 and wait > 0:
         return screenshot_get_text(self, area, ocr, wait)
     if len(out) == 0:
@@ -66,14 +63,13 @@ def screenshot_cut(self, area, before_wait=0):
     # 创建目录
     if not os.path.exists(SS_PATH):
         os.makedirs(SS_PATH)
-    path = SS_PATH + SS_FILE
     if len(area) == 0:
-        self.d.screenshot(path)
+        self.d.screenshot(SS_FILE)
     else:
         ss = self.d.screenshot()
         img = ss.crop(area)
-        img.save(path)
-    return self.ocr.ocr(path)
+        img.save(SS_FILE)
+    return self.ocr.ocr(SS_FILE)
 
 
 def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0):
@@ -84,7 +80,7 @@ def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0):
     # 如果已经找到 或 不需要等待直接返回结果
     if ex or wait == 0:
         return ex
-    time.sleep(SS_RATE)
+    time.sleep(self.bc['baas']['ss_rate'])
     if wait < 99999:
         wait -= 1
     return screenshot_check_text(self, text, area, wait)
@@ -102,7 +98,7 @@ def screenshot_momo_talk(self, text, area=(), wait=99999, before_wait=0):
     # 不需要等待直接返回结果
     if wait == 0:
         return False, ()
-    time.sleep(SS_RATE)
+    time.sleep(self.bc['baas']['ss_rate'])
     if wait < 99999:
         wait -= 1
     return screenshot_momo_talk(self, text, area, wait)
@@ -120,8 +116,7 @@ def check_rgb(self, area, rgb):
     """
     area = (area[0], area[1], area[0] + 10, area[1] + 10)
     screenshot_check_text(self, '', area, 0)
-    path = SS_PATH + SS_FILE
-    img = cv2.imread(path)
+    img = cv2.imread(SS_FILE)
     return np.array_equal(img[0][0], np.array(rgb))
 
 
@@ -130,8 +125,7 @@ def check_rgb_similar(self, area=(1090, 683, 1091, 684), rgb=(75, 238, 249)):
     判断颜色是否相近，用来判断按钮是否可以点击
     """
     screenshot_check_text(self, '', area, 0)
-    path = SS_PATH + SS_FILE
-    img = cv2.imread(path)
+    img = cv2.imread(SS_FILE)
     dist = color_distance(img[0][0], rgb)
     return dist <= 20
 

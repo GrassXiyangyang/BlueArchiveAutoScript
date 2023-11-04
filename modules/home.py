@@ -1,5 +1,6 @@
 import time
 
+from modules import restart
 from utils import ocr
 from iconst.emulator import *
 
@@ -7,37 +8,15 @@ from iconst.emulator import *
 # 回到首页
 def go_home(self):
     app = self.d.app_current()
-    if app['package'] != CN_BA_PKG:
+    if app['package'] != self.bc['baas']['package']:
         # 启动游戏
-        return start_game(self)
+        return restart.start(self)
 
     # 返回首页
     if recursion_click_house(self):
         return
     # 返回首页失败启动游戏
-    start_game(self)
-
-
-def start_game(self):
-    # 不在则重启应用
-    self.d.app_stop(CN_BA_PKG)
-    self.d.app_start(CN_BA_PKG)
-    # 强制等待
-    time.sleep(8)
-    # 重新进入登录页面
-    ocr.is_login(self)
-    # 点击登录
-    self.double_click(500, 500)
-    # 重新判断是否进入首页
-    while True:
-        if ocr.is_home(self, 0):
-            # 关闭公告
-            time.sleep(1)
-            self.click(400, 40)
-            break
-        # 关闭签到
-        self.click(661, 88)
-        time.sleep(0.5)
+    restart.start(self)
 
 
 def click_house(self):
@@ -69,11 +48,10 @@ def recursion_click_house(self, check_text=False, fail_count=0):
             return recursion_click_house(self, False, fail_count + 1)
 
     # 查看是否有首页按钮
-    path = SS_PATH + SS_FILE
     ss = self.d.screenshot()
     img = ss.crop((1218, 5, 1253, 40))
-    img.save(path)
-    if not ocr.calc_image_mse(path, HOUSE_FILE):
+    img.save(SS_FILE)
+    if not ocr.calc_image_mse(SS_FILE, "./assets/house.png"):
         return False
     # 返回首页
     self.click(1236, 25)

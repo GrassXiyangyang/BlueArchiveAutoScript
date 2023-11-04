@@ -5,12 +5,6 @@ entrust_position = {
     'gjgl': (950, 270), 'smtl': (950, 415), 'jt': (950, 550)
 }
 
-choose = {
-    'gjgl': [[8, 2]],
-    'smtl': [[8, 2]],
-    'jt': [[8, 2]],
-}
-
 
 def start(self):
     # 回到首页
@@ -25,6 +19,6 @@ def start(self):
     # 等待加载
     ocr.screenshot_check_text(self, '讲堂', (1126, 506, 1222, 557))
     # 选择委托
-    special_entrust.choose_entrust(self, 'wanted', entrust_position, choose)
+    special_entrust.choose_entrust(self, entrust_position)
     # 返回首页
     home.click_house(self)

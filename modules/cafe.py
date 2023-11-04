@@ -1,13 +1,14 @@
 import time
 from iconst.emulator import *
 
-from main import Main
 from modules import home
 from utils import ocr
 from PIL import Image, ImageEnhance
 
 
-def start(self: Main):
+def start(self):
+    # 回到首页
+    home.go_home(self)
     # 初始化窗口
     init_window(self)
     # 领取收益
@@ -28,8 +29,6 @@ def start(self: Main):
 
 
 def init_window(self):
-    # 回到首页
-    home.go_home(self)
     # 点击咖啡厅
     self.double_click(89, 653)
     # 等待进入咖啡厅
@@ -60,7 +59,7 @@ def invite_girl(self):
     # 点击确认
     self.click(770, 500)
     # 强制等待发消息邀请妹子
-    time.sleep(2)
+    time.sleep(3)
 
 
 def get_cafe_money(self):
@@ -78,9 +77,11 @@ def get_cafe_money(self):
     ocr.close_prize_info(self)
     # 关闭领取界面
     self.d.click(903, 155)
+    # 防止体力超出 todo
+    self.d.click(903, 155)
 
 
-def click_girl(self: Main):
+def click_girl(self):
     # 定义四个坐标点
     left_top = (12, 301)
     right_top = (773, 103)
@@ -110,21 +111,20 @@ def click_girl(self: Main):
 #         self.click(x, y)
 
 
-def click_girl2(self: Main, i):
+def click_girl2(self, i):
     if i % 2 == 0:
         self.d.swipe(327, 512, 1027, 125)
     else:
         self.d.swipe(1008, 516, 300, 150)
 
     ocr.screenshot(self)
-    path = SS_PATH + SS_FILE
 
     # 创建一个增强器对象，用于调整饱和度
-    enhancer = ImageEnhance.Color(Image.open(path))
+    enhancer = ImageEnhance.Color(Image.open(SS_FILE))
     # 控制饱和度，0.0 代表完全不饱和（即纯黑白），1.0 保持不变
     factor = 999  # 增加或减少饱和度的量，你可以根据需要调整这个值
     img_enhanced = enhancer.enhance(factor)
-    img_enhanced.save(path)
+    img_enhanced.save(SS_FILE)
 
     # img_edges = Image.open(path).filter(ImageFilter.FIND_EDGES)
     #
@@ -138,7 +138,7 @@ def click_girl2(self: Main, i):
 
     # 保存处理后的图片
 
-    result = ocr.match_image(path, GIRL_FILE, 0.1)
+    result = ocr.match_image(SS_FILE, "./assets/girl3.jpg", 0.1)
     for r in result:
         x = r['result'][0]
         y = r['result'][1]
