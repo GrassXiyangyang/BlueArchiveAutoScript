@@ -6,7 +6,8 @@ import uiautomator2 as u2
 from uiautomator2 import Device
 from datetime import datetime, timedelta
 from cnocr import CnOcr
-from modules import group, cafe, mailbox, task, schedule, shop, special_entrust, wanted, arena, momo_talk, restart
+from modules import group, cafe, mailbox, work_task, schedule, shop, special_entrust, wanted, arena, momo_talk, restart, \
+    normal_task, hard_task
 from utils import ocr
 
 func_dict = {
@@ -18,9 +19,11 @@ func_dict = {
     'special_entrust': special_entrust.start,
     'wanted': wanted.start,
     'arena': arena.start,
-    'task': task.start,
+    'work_task': work_task.start,
+    'normal_task': normal_task.start,
+    'hard_task': hard_task.start,
     'mailbox': mailbox.start,
-    'restart': restart.start
+    'restart': restart.start,
 }
 
 

@@ -31,7 +31,7 @@ def recursion_click_house(self, check_text=False, fail_count=0):
 
     if ocr.is_home(self, 0):
         # 和妹子互动
-        self.d.click(851, 262)
+        self.d.double_click(851, 262)
         return True
 
     if check_text:
