@@ -14,5 +14,5 @@ def start(self):
     if ocr.screenshot_check_text(self, "确认", (600, 468, 682, 506), 0):
         self.click(641, 485)
 
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)

@@ -23,5 +23,5 @@ def start(self):
             print("没有需要领取的奖励")
             break
 
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)

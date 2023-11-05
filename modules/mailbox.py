@@ -14,10 +14,9 @@ def start(self):
         print("开始领取奖励")
         # 点击一键领取
         self.click(1136, 669)
-        # todo 库存满了弹窗
         # 关闭获得奖励
         ocr.close_prize_info(self)
     else:
         print("没有需要领取的奖励")
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)

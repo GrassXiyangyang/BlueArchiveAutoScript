@@ -110,7 +110,7 @@ class Main:
         # 获取当前日期时间
         now = datetime.now()
         # 计算下次执行时间
-        if hasattr(self.tc, 'interval'):
+        if 'interval' in self.tc:
             future = now + timedelta(seconds=self.tc['interval'])
         else:
             future = now + timedelta(days=1)

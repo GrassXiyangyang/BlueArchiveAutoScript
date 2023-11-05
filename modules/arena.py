@@ -21,12 +21,10 @@ def start(self):
 
     # 开始战斗
     fight(self)
-
     # 领奖
     get_prize(self)
-
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)
 
 
 def get_prize(self):
@@ -61,15 +59,16 @@ def fight(self, wait=False):
     time.sleep(3)
     # 出击
     self.double_click(1175, 665, True, 1, 1)
-    # 等待结果 todo 失败的时候点不到确定按钮,改天在修
-    ocr.screenshot_check_text(self, '确认', (550, 439, 733, 567))  # 确认战斗结果
-    # 确认结果
-    self.d.click(646, 526)
+    # 等待结果
+    ex, position = ocr.screenshot_get_position(self, '确认', (550, 439, 733, 567))  # 确认战斗结果
+    if ex:
+        # 确认结果
+        self.click(position[1][0] + 520, position[1][1] + 455)
     for i in range(2):
         # 确认排名升级
         if ocr.screenshot_check_text(self, '确认', (555, 516, 733, 567), 5):
             # 确认结果
-            self.d.click(646, 526)
+            self.click(646, 526)
     # 重新战斗
     fight(self, True)
 

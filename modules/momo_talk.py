@@ -41,13 +41,13 @@ def start_chat(self):
     self.mm_i = 0
     while self.mm_i < 6:
         # 检测回复
-        ex, position = ocr.screenshot_momo_talk(self, '回复', (774, 196, 1123, 603), 0, 0)
+        ex, position = ocr.screenshot_get_position(self, '回复', (774, 196, 1123, 603), 0, 0)
         if ex:
             self.mm_i = 0
             reply_message(self, position)
             continue
         # 检测好感故事
-        ex, position = ocr.screenshot_momo_talk(self, '好感故事', (774, 196, 1123, 603), 0, 0)
+        ex, position = ocr.screenshot_get_position(self, '好感故事', (774, 196, 1123, 603), 0, 0)
         if ex:
             self.mm_i = 0
             good_story(self, position)
@@ -71,14 +71,16 @@ def good_story(self, position):
     ocr.screenshot_check_text(self, '进入好感故事', (820, 545, 1017, 579))
     # 点击进入好感故事
     self.click(919, 563)
-    # 等待菜单出现
-    ocr.screenshot_check_text(self, '菜单', (1172, 24, 1232, 52))
-    # 点击菜单
-    self.click(1204, 40, False, 1, 0.5)
-    # 点击跳过
-    self.click(1212, 115, False, 1, 1)
-    # 确认跳过
-    ocr.screenshot_check_text(self, '确认', (730, 503, 807, 539))
+    while True:
+        # 等待菜单出现
+        ocr.screenshot_check_text(self, '菜单', (1172, 24, 1232, 52))
+        # 点击菜单
+        self.click(1204, 40)
+        # 点击跳过
+        self.click(1212, 115, False, 1, 0.5)
+        # 确认跳过
+        if ocr.screenshot_check_text(self, '确认', (730, 503, 807, 539), 2):
+            break
     # 确认跳过
     self.d.click(770, 516)
     # 关闭奖励

@@ -16,9 +16,7 @@ def start(self):
 
     # 点击悬赏通缉
     self.click(733, 472)
-    # 等待加载
-    ocr.screenshot_check_text(self, '讲堂', (1126, 506, 1222, 557))
     # 选择委托
     special_entrust.choose_entrust(self, entrust_position)
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)

@@ -37,7 +37,7 @@ def wait_loading(self):
     return True
 
 
-def screenshot_get_text(self, area, ocr=None, wait=99999):
+def screenshot_get_text(self, area, ocr=None, wait=99999, i=0):
     # 检查文字前，等待加载完成
     wait_loading(self)
     if not os.path.exists(SS_PATH):
@@ -52,7 +52,7 @@ def screenshot_get_text(self, area, ocr=None, wait=99999):
         return screenshot_get_text(self, area, ocr, wait)
     if len(out) == 0:
         return ''
-    return out[0]['text']
+    return out[i]['text']
 
 
 def screenshot_cut(self, area, before_wait=0):
@@ -86,7 +86,7 @@ def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0):
     return screenshot_check_text(self, text, area, wait)
 
 
-def screenshot_momo_talk(self, text, area=(), wait=99999, before_wait=0):
+def screenshot_get_position(self, text, area=(), wait=99999, before_wait=0):
     out = screenshot_cut(self, area, before_wait)
     print("\t\t\t", out)
     for t in out:
@@ -101,7 +101,7 @@ def screenshot_momo_talk(self, text, area=(), wait=99999, before_wait=0):
     time.sleep(self.bc['baas']['ss_rate'])
     if wait < 99999:
         wait -= 1
-    return screenshot_momo_talk(self, text, area, wait)
+    return screenshot_get_position(self, text, area, wait)
 
 
 def color_distance(rgb1, rgb2):
@@ -134,10 +134,18 @@ def close_prize_info(self):
     """
     关闭奖励道具结算页面
     """
-    screenshot_check_text(self, '点击继续', (577, 614, 704, 648))
-    # 关闭道具信息
-    self.click(640, 635)
-    time.sleep(0.5)
+    if screenshot_check_text(self, '点击继续', (577, 614, 704, 648), 1):
+        # 关闭道具信息
+        self.click(640, 635)
+        time.sleep(0.5)
+        return
+    if screenshot_check_text(self, '因超出持有上限', (532, 282, 724, 314), 1):
+        self.click(650, 501)
+        return
+    if screenshot_check_text(self, '以上道具的库存已满', (508, 388, 745, 419), 1):
+        self.click(642, 527)
+        return
+    return close_prize_info(self)
 
 
 def is_home(self, wait=99999):

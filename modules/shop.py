@@ -24,8 +24,8 @@ def start(self):
     ocr.is_shop(self)
     # 购买商品
     buy_goods(self)
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)
 
 
 def buy_goods(self):

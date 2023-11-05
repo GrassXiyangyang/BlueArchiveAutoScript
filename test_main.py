@@ -1,9 +1,8 @@
 import unittest
 
 import uiautomator2 as u2
-from iconst.emulator import *
 from cnocr import CnOcr
-from utils.ocr import screenshot_check_text
+from utils import ocr
 from fuzzywuzzy import fuzz
 
 

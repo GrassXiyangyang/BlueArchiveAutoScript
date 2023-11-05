@@ -21,6 +21,11 @@ def start(self):
             time.sleep(1)
             self.click(400, 40)
             break
+        # 检查跳过
+        if ocr.screenshot_check_text(self, '通知', (599, 144, 675, 178), 3):
+            # 确认跳过
+            self.d.click(770, 500)
+            continue
         # 关闭签到
         self.click(661, 88)
         time.sleep(0.5)

@@ -19,15 +19,6 @@ def go_home(self):
     restart.start(self)
 
 
-def click_house(self):
-    # 返回首页
-    self.click(1236, 25)
-    # 等待首页加载
-    ocr.is_home(self)
-    # 点击妹子，防止多次点击点出来菜单
-    self.click(851, 262, False, 2)
-
-
 def recursion_click_house(self, check_text=False, fail_count=0):
     """
     递归点击首页按钮，如果返回False则返回首页失败，反之返回首页成功
@@ -39,6 +30,8 @@ def recursion_click_house(self, check_text=False, fail_count=0):
         return False
 
     if ocr.is_home(self, 0):
+        # 和妹子互动
+        self.click(851, 262, False, 2)
         return True
 
     if check_text:
@@ -56,5 +49,5 @@ def recursion_click_house(self, check_text=False, fail_count=0):
     # 返回首页
     self.click(1236, 25)
     # 重新检查
-    time.sleep(1)
+    time.sleep(0.5)
     return recursion_click_house(self, check_text, fail_count + 1)

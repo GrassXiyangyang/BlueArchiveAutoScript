@@ -24,8 +24,8 @@ def start(self):
             self.d.click(651, 285)
             continue
         i -= 1
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)
 
 
 def init_window(self):

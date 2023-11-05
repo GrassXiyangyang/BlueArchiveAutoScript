@@ -49,8 +49,8 @@ def choose_course(self):
         self.click(55, 36)
         # 等待日程页面加载
         ocr.is_schedule(self)
-    # 返回首页
-    home.click_house(self)
+    # 回到首页
+    home.go_home(self)
 
 
 def learn_course(self, courses):
@@ -67,7 +67,7 @@ def learn_course(self, courses):
 
         if ocr.screenshot_check_text(self, '每日入场次数已耗尽', (500, 312, 760, 350), 0, 0.5):
             self.click(1233, 25, False, 3)
-            home.click_house(self)
+            home.go_home(self)
             return True
 
         # 等待日程报告
