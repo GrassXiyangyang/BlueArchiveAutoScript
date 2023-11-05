@@ -31,7 +31,7 @@ def recursion_click_house(self, check_text=False, fail_count=0):
 
     if ocr.is_home(self, 0):
         # 和妹子互动
-        self.click(851, 262, False, 2)
+        self.d.click(851, 262)
         return True
 
     if check_text:
@@ -47,7 +47,6 @@ def recursion_click_house(self, check_text=False, fail_count=0):
     if not ocr.calc_image_mse(SS_FILE, "./assets/house.png"):
         return False
     # 返回首页
-    self.click(1236, 25)
+    self.d.double_click(1233, 11)
     # 重新检查
-    time.sleep(0.5)
     return recursion_click_house(self, check_text, fail_count + 1)

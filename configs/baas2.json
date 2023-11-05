@@ -6,7 +6,7 @@
     },
     "cafe": {
         "enable": true,
-        "next": "2023-11-05 14:46:42",
+        "next": "2023-11-05 18:55:17",
         "interval": 3600
     },
     "shop": {
@@ -54,8 +54,8 @@
             {
                 "schedule": "qxn",
                 "stage": [
-                    5,
-                    6
+                    2,
+                    3
                 ]
             },
             {
@@ -111,7 +111,7 @@
     },
     "arena": {
         "enable": true,
-        "next": "2023-11-05 14:49:06",
+        "next": "2023-11-05 18:55:35",
         "interval": 3600,
         "config": {
             "less_level": 2,
@@ -120,22 +120,21 @@
     },
     "task": {
         "enable": true,
-        "next": "2023-11-05 14:49:17",
+        "next": "2023-11-05 18:55:41",
         "interval": 3600
     },
     "momo_talk": {
         "enable": true,
-        "next": "2023-11-05 14:45:31",
+        "next": "2023-11-05 18:55:43",
         "interval": 3600
     },
     "mailbox": {
         "enable": true,
-        "next": "2023-11-05 14:57:34",
+        "next": "2023-11-05 18:55:52",
         "interval": 3600
     },
     "restart": {
         "enable": true,
-        "next": "2023-11-05 05:00:00",
-        "interval": 3600
+        "next": "2023-11-05 18:56:15"
     }
 }

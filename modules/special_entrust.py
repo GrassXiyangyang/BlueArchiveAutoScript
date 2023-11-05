@@ -61,7 +61,7 @@ def choose_entrust(self, position):
             # 查看体力是否足够
             if ocr.screenshot_check_text(self, '是否购买', (515, 227, 627, 260), 0, 0.5):
                 # 关闭弹窗 返回首页
-                self.click(1236, 25, 0, 2)
+                home.go_home(self)
                 return
         else:
             # 查看入场券是否足够

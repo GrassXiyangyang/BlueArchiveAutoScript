@@ -38,8 +38,6 @@ def choose_course(self):
         ocr.screenshot_check_text(self, '全部日程', (1107, 646, 1222, 676))
         # 点击全部日程
         self.click(1166, 662)
-        # 等待页面加载
-        ocr.screenshot_check_text(self, '全部日程', (568, 97, 717, 132))
         # 学习课程
         if learn_course(self, tk['stage']):
             return
@@ -55,6 +53,8 @@ def choose_course(self):
 
 def learn_course(self, courses):
     for c in courses:
+        # 等待页面加载
+        ocr.screenshot_check_text(self, '全部日程', (568, 97, 717, 132))
         # 检查课程是否可用
         if not ocr.check_rgb(self, curse_position[c], (255, 255, 255)):
             print("课程状态不可用")
@@ -80,3 +80,4 @@ def learn_course(self, courses):
         # todo 截图到记录中
         # 确认日程报告
         self.d.click(640, 552)
+        time.sleep(1)

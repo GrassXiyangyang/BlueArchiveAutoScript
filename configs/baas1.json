@@ -1,141 +1,140 @@
 {
-  "baas": {
-    "serial": "emulator-5554",
-    "package": "com.RoamingStar.BlueArchive",
-    "ss_rate": 0.1
-  },
-  "cafe": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "interval": 3600
-  },
-  "shop": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "config": [
-      {
-        "shop": "general",
+    "baas": {
+        "serial": "emulator-5554",
+        "package": "com.RoamingStar.BlueArchive",
+        "ss_rate": 0.1
+    },
+    "cafe": {
         "enable": true,
-        "count": 3,
-        "_surplus": 0,
-        "_prev_date": "1105",
-        "goods": [
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16
-        ]
-      },
-      {
-        "shop": "arena",
+        "next": "2023-11-05 15:06:26",
+        "interval": 3600
+    },
+    "shop": {
         "enable": true,
-        "count": 1,
-        "_surplus": 0,
-        "_prev_date": "1105",
-        "goods": [
-          4,
-          5
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "shop": "general",
+                "enable": true,
+                "count": 3,
+                "_surplus": 0,
+                "_prev_date": "1105",
+                "goods": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                ]
+            },
+            {
+                "shop": "arena",
+                "enable": true,
+                "count": 1,
+                "_surplus": 0,
+                "_prev_date": "1105",
+                "goods": [
+                    4,
+                    5
+                ]
+            }
         ]
-      }
-    ]
-  },
-  "schedule": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "config": [
-      {
-        "schedule": "qxn",
-        "stage": [
-          7,
-          8
+    },
+    "schedule": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "schedule": "qxn",
+                "stage": [
+                    7,
+                    8
+                ]
+            },
+            {
+                "schedule": "ghn",
+                "stage": [
+                    7,
+                    8
+                ]
+            },
+            {
+                "schedule": "sl_life",
+                "stage": [
+                    5
+                ]
+            }
         ]
-      },
-      {
-        "schedule": "ghn",
-        "stage": [
-          7,
-          8
+    },
+    "group": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00"
+    },
+    "wanted": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "entrust": "gjgl",
+                "stage": 8,
+                "count": 2
+            },
+            {
+                "entrust": "smtl",
+                "stage": 8,
+                "count": 2
+            },
+            {
+                "entrust": "jt",
+                "stage": 8,
+                "count": 2
+            }
         ]
-      },
-      {
-        "schedule": "sl_life",
-        "stage": [
-          5
+    },
+    "special_entrust": {
+        "enable": true,
+        "next": "2023-11-05 05:00:00",
+        "config": [
+            {
+                "entrust": "jdfy",
+                "stage": 1,
+                "count": 1
+            }
         ]
-      }
-    ]
-  },
-  "group": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00"
-  },
-  "wanted": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "config": [
-      {
-        "entrust": "gjgl",
-        "stage": 8,
-        "count": 2
-      },
-      {
-        "entrust": "smtl",
-        "stage": 8,
-        "count": 2
-      },
-      {
-        "entrust": "jt",
-        "stage": 8,
-        "count": 2
-      }
-    ]
-  },
-  "special_entrust": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "config": [
-      {
-        "entrust": "jdfy",
-        "stage": 1,
-        "count": 1
-      }
-    ]
-  },
-  "arena": {
-    "enable": true,
-    "next": "2023-11-4 20:37:26",
-    "interval": 3600,
-    "config": {
-      "less_level": 2,
-      "max_refresh": 10
+    },
+    "arena": {
+        "enable": true,
+        "next": "2023-11-05 15:16:45",
+        "interval": 3600,
+        "config": {
+            "less_level": 2,
+            "max_refresh": 10
+        }
+    },
+    "task": {
+        "enable": true,
+        "next": "2023-11-05 15:17:01",
+        "interval": 3600
+    },
+    "momo_talk": {
+        "enable": true,
+        "next": "2023-11-05 15:17:03",
+        "interval": 3600
+    },
+    "mailbox": {
+        "enable": true,
+        "next": "2023-11-05 15:17:14",
+        "interval": 3600
+    },
+    "restart": {
+        "enable": true,
+        "next": "2023-11-04 05:00:00"
     }
-  },
-  "task": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "interval": 3600
-  },
-  "momo_talk": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "interval": 3600
-  },
-  "mailbox": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "interval": 3600
-  },
-  "restart": {
-    "enable": true,
-    "next": "2023-11-05 05:00:00",
-    "interval": 3600
-  }
 }
