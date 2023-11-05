@@ -100,8 +100,9 @@ class Main:
             if not con['enable']:
                 print("功能已关闭", ba_task, con, "\n")
                 continue
+            if datetime.strptime(con['end'], "%Y-%m-%d %H:%M:%S") < datetime.now():
+                continue
             if datetime.strptime(con['next'], "%Y-%m-%d %H:%M:%S") > datetime.now():
-                print("队列中", ba_task, con, "\n")
                 continue
             return ba_task, con
         return None, None
