@@ -42,9 +42,9 @@ def choose_course(self):
         if learn_course(self, tk['stage']):
             return
         # 返回课程
-        self.click(1140, 116)
-        time.sleep(1)
-        self.click(55, 36)
+        self.click_condition(1140, 116, True, ocr.screenshot_check_text, ('全部日程', (1107, 646, 1222, 676), 0), False,
+                             0.5)
+        self.click(55, 36, True, 1, 1)
         # 等待日程页面加载
         ocr.is_schedule(self)
     # 回到首页
@@ -79,5 +79,4 @@ def learn_course(self, courses):
 
         # todo 截图到记录中
         # 确认日程报告
-        self.d.click(640, 552)
-        time.sleep(1)
+        self.click_condition(640, 552, False, ocr.screenshot_check_text, ('日程报告', (579, 120, 700, 150), 0), False, 0.5)

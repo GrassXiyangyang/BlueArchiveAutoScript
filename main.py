@@ -1,7 +1,6 @@
 import json
 import sys
 import time
-from filelock import FileLock
 import uiautomator2 as u2
 from uiautomator2 import Device
 from datetime import datetime, timedelta
@@ -55,11 +54,12 @@ class Main:
                 time.sleep(rate)
             self.d.click(x, y)
 
-    def click_condition(self, x, y, fn, fn_args, wait=True, rate=0):
+    def click_condition(self, x, y, cond, fn, fn_args, wait=True, rate=0):
         """
         条件点击，直到不满足条件为止
         @param x: x坐标
         @param y: y坐标
+        @param cond: true 或 false 
         @param fn: 要执行的函数，需要返回bool
         @param fn_args: 执行函数的参数
         @param wait: 是否需要等待加载
@@ -67,9 +67,10 @@ class Main:
         """
         if wait:
             stage.wait_loading(self)
-        while not fn(self, *fn_args):
-            self.d.click(x, y)
+        self.d.click(x, y)
+        while cond != fn(self, *fn_args):
             time.sleep(rate)
+            self.d.click(x, y)
 
     def double_click(self, x, y, wait=True, count=1, rate=0):
         if wait:
@@ -100,22 +101,24 @@ class Main:
                 sys.exit(0)
 
     def config_path(self):
+        if len(sys.argv) < 2:
+            return './configs/baas.json'
         return './configs/{0}'.format(sys.argv[1])
 
     def load_config(self):
-        with open(self.config_path(), 'r') as f:
+        with open(self.config_path(), 'r', encoding='utf-8') as f:
             data = json.load(f)
         self.bc = data
         pass
 
     def save_config(self):
-        with open(self.config_path().format(sys.argv[1]), 'w', encoding='utf-8') as f:
+        with open(self.config_path(), 'w', encoding='utf-8') as f:
             f.write(json.dumps(self.bc, indent=4, ensure_ascii=False))
 
     def get_task(self):
         self.load_config()
         for ba_task, con in self.bc.items():
-            if ba_task == 'baas' or ba_task != 'make':
+            if ba_task == 'baas':
                 continue
             if not con['enable']:
                 print("功能已关闭", ba_task, con, "\n")

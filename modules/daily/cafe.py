@@ -1,9 +1,12 @@
 import time
-
-from common import stage, ocr, image
-from common.iconst import *
+from collections import defaultdict
+import numpy as np
+from common import stage, ocr
 from modules.baas import home
-from PIL import Image, ImageEnhance
+
+preset_position = {
+    1: (867, 272), 2: (867, 403), 3: (867, 532), 4: (867, 396), 5: (867, 525)
+}
 
 
 def start(self):
@@ -16,16 +19,44 @@ def start(self):
     # 邀请妹子
     invite_girl(self)
     # 和妹子互动
-    i = 5
-    while i > 0:
-        click_girl2(self, i)
-        if ocr.screenshot_check_text(self, '好感等级提升', (473, 593, 757, 644), 3):
-            # 关闭好感窗口
-            self.d.click(651, 285)
-            continue
-        i -= 1
+    start_interactive(self)
     # 回到首页
     home.go_home(self)
+
+
+def start_interactive(self):
+    load_preset(self, self.tc['config']['blank_preset'])
+    # 收起菜单
+    self.d.click(555, 622)
+    i = 2
+    while i > 0:
+        click_girl_plus(self, i)
+        if ocr.screenshot_check_text(self, '好感等级提升', (473, 593, 757, 644), 3):
+            # 关闭好感窗口,重新开始
+            self.d.click(651, 285)
+            i = 0
+            continue
+        i -= 1
+    # 暂开菜单
+    self.d.click(57, 624)
+    load_preset(self, self.tc['config']['my_preset'])
+
+
+def load_preset(self, preset):
+    # 点击预设
+    ocr.screenshot_check_text(self, '预设', (326, 656, 366, 677))
+    self.click(360, 640)
+    ocr.screenshot_check_text(self, '预设', (604, 127, 678, 157))
+    if preset > 3:
+        self.d.swipe(933, 586, 933, 230)
+        time.sleep(0.5)
+    self.d.click(*preset_position[preset])
+    # 等待加载
+    ocr.screenshot_check_text(self, '确认', (732, 482, 803, 518))
+    # 确认加载
+    self.d.click(771, 500)
+    # 关闭预设
+    self.d.double_click(934, 146)
 
 
 def init_window(self):
@@ -77,73 +108,51 @@ def get_cafe_money(self):
     stage.close_prize_info(self, True)
     # 关闭领取界面
     self.d.click(903, 155)
-    # 防止体力超出 todo
+    # 防止体力超出
     self.d.click(903, 155)
 
 
-def click_girl(self):
-    # 定义四个坐标点
-    left_top = (12, 301)
-    right_top = (773, 103)
-    right_bottom = (1264, 360)
-    left_bottom = (487, 579)
-
-    # 确定矩形区域的边界
-    xmin = min(left_top[0], right_top[0], right_bottom[0], left_bottom[0])
-    xmax = max(left_top[0], right_top[0], right_bottom[0], left_bottom[0])
-    ymin = min(left_top[1], right_top[1], right_bottom[1], left_bottom[1])
-    ymax = max(left_top[1], right_top[1], right_bottom[1], left_bottom[1])
-
-    # 每隔20个像素单位进行一次点击操作
-    for y in range(ymin, ymax + 1, 50):  # 先遍历y坐标
-        for x in range(xmin, xmax + 1, 50):  # 再遍历x坐标
-            if y < 160 or y > 570:
-                continue
-            self.d.click(x, y)
-
-
-# # 每隔20个像素单位进行一次点击操作
-# for x in range(xmin, xmax + 1, 50):
-#     for y in range(ymin, ymax + 1, 50):
-#         if y < 160 or y > 570:
-#             continue
-#         time.sleep(0.01)
-#         self.click(x, y)
-
-
-def click_girl2(self, i):
+def click_girl_plus(self, i):
     if i % 2 == 0:
         self.d.swipe(327, 512, 1027, 125)
     else:
         self.d.swipe(1008, 516, 300, 150)
+    time.sleep(0.5)
+    before = self.d.screenshot()
+    time.sleep(1)
+    after = self.d.screenshot()
+    # 将图像转换为numpy数组以便进行数学操作
+    img1_data = np.array(before)
+    img2_data = np.array(after)
 
-    ocr.screenshot(self)
+    diff_pixels_coords = np.where(img1_data != img2_data)
+    # 创建一个映射，键是每个像素点所在的100px区块的坐标，值是该区块中所有不同像素点的列表
+    blocks = defaultdict(list)
 
-    # 创建一个增强器对象，用于调整饱和度
-    enhancer = ImageEnhance.Color(Image.open(SS_FILE))
-    # 控制饱和度，0.0 代表完全不饱和（即纯黑白），1.0 保持不变
-    factor = 999  # 增加或减少饱和度的量，你可以根据需要调整这个值
-    img_enhanced = enhancer.enhance(factor)
-    img_enhanced.save(SS_FILE)
+    for p in zip(*diff_pixels_coords):
+        x = int(p[1])
+        y = int(p[0])
+        # 计算此像素所在的区块坐标
+        block_coord = (y // 100, x // 100)
+        blocks[block_coord].append((y, x))
 
-    # img_edges = Image.open(path).filter(ImageFilter.FIND_EDGES)
-    #
-    # # 转换为灰度图
-    # img_gray = img_edges.convert('L')
-    #
-    # # 应用二值化阈值
-    # threshold = 200  # 阈值范围在 0（全黑）到 255（全白），你可以根据需要调整
-    # bin_img = img_gray.point(lambda p: p > threshold and 255)
-    # bin_img.save(path)
-
-    # 保存处理后的图片
-
-    result = image.match_image(SS_FILE, "./assets/girl3.jpg", 0.1)
-    for r in result:
-        x = r['result'][0]
-        y = r['result'][1]
+    # 对于每个区块，保留中间的像素点
+    finial = []
+    for block_coord, pixels in blocks.items():
+        # 将像素列表按照Y和X排序
+        pixels.sort()
+        # 取出中间的像素
+        mid_pixel = pixels[len(pixels) // 2]
+        # 将坐标变换回原图尺寸
+        center_coord = (mid_pixel[0] * 1 + 0.5, mid_pixel[1] * 1 + 0.5)
         # 防止溢出到功能按钮
-        if y < 160 or y > 570:
+        x = int(center_coord[1])
+        y = int(center_coord[0])
+        if y < 70 or \
+                (y < 130 and x < 320) or (y < 130 and x > 1170) or \
+                (y > 570 and x < 100) or (y > 570 and x > 770):
             continue
-        print("点击了", x, y)
-        self.d.click(x, y)
+        finial.append(center_coord)
+    np.random.shuffle(finial)
+    for p in finial:
+        self.d.click(int(p[1]), int(p[0]))

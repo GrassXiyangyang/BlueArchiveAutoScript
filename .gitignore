@@ -1,5 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
 .DS_Store
-/runtime
+**/runtime
 **__pycache__
+/configs/baas_desc.json
+/configs/baas2.json
