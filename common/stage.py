@@ -52,7 +52,7 @@ def confirm_scan(self, tk):
     return 'nothing'
 
 
-def close_prize_info(self):
+def close_prize_info(self, ap_check=False, mail_check=False):
     """
     关闭奖励道具结算页面
     """
@@ -61,13 +61,13 @@ def close_prize_info(self):
         self.click(640, 635)
         time.sleep(0.5)
         return
-    if ocr.screenshot_check_text(self, '因超出持有上限', (532, 282, 724, 314), 1):
+    if ap_check and ocr.screenshot_check_text(self, '因超出持有上限', (532, 282, 724, 314), 1):
         self.click(650, 501)
         return
-    if ocr.screenshot_check_text(self, '以上道具的库存已满', (508, 388, 745, 419), 1):
+    if mail_check and ocr.screenshot_check_text(self, '以上道具的库存已满', (508, 388, 745, 419), 1):
         self.click(642, 527)
         return
-    return close_prize_info(self)
+    return close_prize_info(self, ap_check, mail_check)
 
 
 def wait_loading(self):

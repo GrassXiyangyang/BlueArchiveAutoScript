@@ -84,7 +84,7 @@ def good_story(self, position):
     # 确认跳过
     self.d.click(770, 516)
     # 关闭奖励
-    stage.close_prize_info(self)
+    stage.close_prize_info(self, True)
 
 
 def check_message(self):

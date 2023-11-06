@@ -74,7 +74,7 @@ def get_cafe_money(self):
     # 点击领取
     self.click(641, 516)
     # 关闭获得奖励
-    stage.close_prize_info(self)
+    stage.close_prize_info(self, True)
     # 关闭领取界面
     self.d.click(903, 155)
     # 防止体力超出 todo

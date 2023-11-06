@@ -9,7 +9,7 @@ from cnocr import CnOcr
 
 from common import stage
 from modules.baas import restart
-from modules.daily import group, shop, cafe, schedule, special_entrust, wanted, arena
+from modules.daily import group, shop, cafe, schedule, special_entrust, wanted, arena, make
 from modules.reward import momo_talk, work_task, mailbox
 from modules.scan import normal_task, hard_task
 
@@ -22,6 +22,7 @@ func_dict = {
     'special_entrust': special_entrust.start,
     'wanted': wanted.start,
     'arena': arena.start,
+    'make': make.start,
     'work_task': work_task.start,
     'normal_task': normal_task.start,
     'hard_task': hard_task.start,
@@ -53,6 +54,22 @@ class Main:
             if rate > 0:
                 time.sleep(rate)
             self.d.click(x, y)
+
+    def click_condition(self, x, y, fn, fn_args, wait=True, rate=0):
+        """
+        条件点击，直到不满足条件为止
+        @param x: x坐标
+        @param y: y坐标
+        @param fn: 要执行的函数，需要返回bool
+        @param fn_args: 执行函数的参数
+        @param wait: 是否需要等待加载
+        @param rate: 每次点击等待时间
+        """
+        if wait:
+            stage.wait_loading(self)
+        while not fn(self, *fn_args):
+            self.d.click(x, y)
+            time.sleep(rate)
 
     def double_click(self, x, y, wait=True, count=1, rate=0):
         if wait:
@@ -92,15 +109,13 @@ class Main:
         pass
 
     def save_config(self):
-        lock = FileLock(self.config_path())
-        with lock:
-            with open(self.config_path().format(sys.argv[1]), 'w') as f:
-                f.write(json.dumps(self.bc, indent=4))
+        with open(self.config_path().format(sys.argv[1]), 'w', encoding='utf-8') as f:
+            f.write(json.dumps(self.bc, indent=4, ensure_ascii=False))
 
     def get_task(self):
         self.load_config()
         for ba_task, con in self.bc.items():
-            if ba_task == 'baas':
+            if ba_task == 'baas' or ba_task != 'make':
                 continue
             if not con['enable']:
                 print("功能已关闭", ba_task, con, "\n")

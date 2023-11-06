@@ -16,7 +16,7 @@ def start(self):
             # 点击一键领取
             self.click(1136, 669)
             # 关闭获得奖励
-            stage.close_prize_info(self)
+            stage.close_prize_info(self, True)
             # 点击空白处防止体力超出
             self.click(1236, 79)
         else:

@@ -52,7 +52,7 @@ def buy_goods(self):
         self.d.click(769, 484)
 
         # 关闭获得奖励
-        stage.close_prize_info(self)
+        stage.close_prize_info(self, True)
 
         # 刷新功能 todo
 
