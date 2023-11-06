@@ -1,7 +1,7 @@
 import time
 
-from modules import home, common
-from utils import ocr
+from modules.baas import home
+from common import ocr, stage
 
 entrust_position = {
     'jdfy': (962, 270), 'xyhs': (962, 410)
@@ -52,7 +52,7 @@ def choose_entrust(self, position):
         # 点击关卡
         self.click(*level_position[tk['stage']])
         # 确认扫荡
-        rst = common.confirm_scan(self, tk)
+        rst = stage.confirm_scan(self, tk)
         if rst == 'return':
             return
         elif rst == 'continue':

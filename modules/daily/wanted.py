@@ -1,5 +1,6 @@
-from modules import home, special_entrust
-from utils import ocr
+from common import ocr
+from modules.baas import home
+from modules.daily import special_entrust
 
 entrust_position = {
     'gjgl': (950, 270), 'smtl': (950, 415), 'jt': (950, 550)

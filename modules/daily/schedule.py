@@ -1,6 +1,6 @@
 import time
-from modules import home
-from utils import ocr
+from modules.baas import home
+from common import ocr, color
 
 schedule_position = {
     'sl_bus': (908, 182), 'sl_life': (908, 285), 'ghn': (908, 397), 'abds': (908, 502), 'qxn': (908, 606)
@@ -24,8 +24,8 @@ def start(self):
     surplus = ocr.screenshot_get_text(self, (281, 89, 318, 112))
     if surplus == '0/5':
         print("没票了")
-        # home.click_house(self)
-        # return
+        home.go_home(self)
+        return
     # 选择课程
     choose_course(self)
 
@@ -56,7 +56,7 @@ def learn_course(self, courses):
         # 等待页面加载
         ocr.screenshot_check_text(self, '全部日程', (568, 97, 717, 132))
         # 检查课程是否可用
-        if not ocr.check_rgb(self, curse_position[c], (255, 255, 255)):
+        if not color.check_rgb(self, curse_position[c], (255, 255, 255)):
             print("课程状态不可用")
             continue
         # 点击课程

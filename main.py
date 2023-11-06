@@ -6,9 +6,12 @@ import uiautomator2 as u2
 from uiautomator2 import Device
 from datetime import datetime, timedelta
 from cnocr import CnOcr
-from modules import group, cafe, mailbox, work_task, schedule, shop, special_entrust, wanted, arena, momo_talk, restart, \
-    normal_task, hard_task
-from utils import ocr
+
+from common import stage
+from modules.baas import restart
+from modules.daily import group, shop, cafe, schedule, special_entrust, wanted, arena
+from modules.reward import momo_talk, work_task, mailbox
+from modules.scan import normal_task, hard_task
 
 func_dict = {
     'group': group.start,
@@ -44,7 +47,7 @@ class Main:
 
     def click(self, x, y, wait=True, count=1, rate=0):
         if wait:
-            ocr.wait_loading(self)
+            stage.wait_loading(self)
         for i in range(count):
             print("\t\t\n\n Click", x, y, "\n\n")
             if rate > 0:
@@ -53,8 +56,7 @@ class Main:
 
     def double_click(self, x, y, wait=True, count=1, rate=0):
         if wait:
-            ocr.wait_loading(self)
-        ocr.wait_loading(self)
+            stage.wait_loading(self)
         for i in range(count):
             print("\t\t\n\n DoubleClick", x, y, "\n\n")
             if rate > 0:

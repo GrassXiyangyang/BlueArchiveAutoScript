@@ -1,5 +1,5 @@
-from modules import home
-from utils import ocr
+from modules.baas import home
+from common import ocr, stage, color
 
 
 def start(self):
@@ -11,12 +11,12 @@ def start(self):
     ocr.is_task(self)
 
     while True:
-        if ocr.check_rgb_similar(self):
+        if color.check_rgb_similar(self):
             print("开始领取奖励")
             # 点击一键领取
             self.click(1136, 669)
             # 关闭获得奖励
-            ocr.close_prize_info(self)
+            stage.close_prize_info(self)
             # 点击空白处防止体力超出
             self.click(1236, 79)
         else:

@@ -1,11 +1,10 @@
-import time
-
-from modules import restart
-from utils import ocr
-from iconst.emulator import *
-
+from common import ocr, image
+from common.iconst import *
 
 # 回到首页
+from modules.baas import restart
+
+
 def go_home(self):
     app = self.d.app_current()
     if app['package'] != self.bc['baas']['package']:
@@ -44,7 +43,7 @@ def recursion_click_house(self, check_text=False, fail_count=0):
     ss = self.d.screenshot()
     img = ss.crop((1218, 5, 1253, 40))
     img.save(SS_FILE)
-    if not ocr.calc_image_mse(SS_FILE, "./assets/house.png"):
+    if not image.calc_image_mse(SS_FILE, "./assets/house.png"):
         return False
     # 返回首页
     self.d.double_click(1233, 11)

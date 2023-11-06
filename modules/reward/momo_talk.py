@@ -1,14 +1,14 @@
 import time
 
-from modules import home
-from utils import ocr
+from modules.baas import home
+from common import stage, ocr, color
 
 
 def start(self):
     # 回到首页
     home.go_home(self)
 
-    if not ocr.check_rgb_similar(self, (183, 122, 184, 123), (1, 68, 241)):
+    if not color.check_rgb_similar(self, (183, 122, 184, 123), (1, 68, 241)):
         print("没有可以互动的学生")
         return
     # 点击桃信
@@ -23,7 +23,7 @@ def start(self):
     # 查看排序 todo
 
     # 查看第一个学生是否可以聊天
-    if not ocr.check_rgb_similar(self, (640, 245, 641, 246), (25, 71, 251)):
+    if not color.check_rgb_similar(self, (640, 245, 641, 246), (25, 71, 251)):
         print("没人可以聊天了...")
         return
 
@@ -84,7 +84,7 @@ def good_story(self, position):
     # 确认跳过
     self.d.click(770, 516)
     # 关闭奖励
-    ocr.close_prize_info(self)
+    stage.close_prize_info(self)
 
 
 def check_message(self):

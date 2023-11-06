@@ -1,7 +1,7 @@
 import time
 
-from modules import home
-from utils import ocr
+from common import ocr, color, stage
+from modules.baas import home
 
 
 def start(self):
@@ -28,16 +28,16 @@ def start(self):
 
 
 def get_prize(self):
-    if ocr.check_rgb_similar(self, (320, 400, 321, 401)):
+    if color.check_rgb_similar(self, (320, 400, 321, 401)):
         # 领取时间奖励
         self.click(353, 385)
         # 关闭奖励
-        ocr.close_prize_info(self)
-    if ocr.check_rgb_similar(self, (330, 480, 331, 481)):
+        stage.close_prize_info(self)
+    if color.check_rgb_similar(self, (330, 480, 331, 481)):
         # 领取挑战奖励
         self.click(348, 465)
         # 关闭奖励
-        ocr.close_prize_info(self)
+        stage.close_prize_info(self)
 
 
 def fight(self, wait=False):

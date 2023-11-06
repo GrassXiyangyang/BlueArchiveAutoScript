@@ -1,8 +1,8 @@
 import time
-from iconst.emulator import *
 
-from modules import home
-from utils import ocr
+from common import stage, ocr, image
+from common.iconst import *
+from modules.baas import home
 from PIL import Image, ImageEnhance
 
 
@@ -74,7 +74,7 @@ def get_cafe_money(self):
     # 点击领取
     self.click(641, 516)
     # 关闭获得奖励
-    ocr.close_prize_info(self)
+    stage.close_prize_info(self)
     # 关闭领取界面
     self.d.click(903, 155)
     # 防止体力超出 todo
@@ -138,7 +138,7 @@ def click_girl2(self, i):
 
     # 保存处理后的图片
 
-    result = ocr.match_image(SS_FILE, "./assets/girl3.jpg", 0.1)
+    result = image.match_image(SS_FILE, "./assets/girl3.jpg", 0.1)
     for r in result:
         x = r['result'][0]
         y = r['result'][1]

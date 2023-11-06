@@ -1,6 +1,6 @@
 import time
 
-from utils import ocr
+from common import ocr
 
 
 def start(self):

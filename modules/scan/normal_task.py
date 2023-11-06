@@ -1,7 +1,8 @@
 import time
 
-from modules import home, common, hard_task
-from utils import ocr
+from common import ocr, color, stage
+from modules.baas import home
+from modules.scan import hard_task
 
 normal_position = {
     1: (1120, 240), 2: (1120, 340), 3: (1120, 440), 4: (1120, 540), 5: (1120, 568),
@@ -23,11 +24,11 @@ def start(self):
 
     if self.tc['task'] == 'hard_task':
         # 点击困难
-        while not ocr.check_rgb_similar(self, (1000, 150, 1001, 151), (66, 66, 198)):
+        while not color.check_rgb_similar(self, (1000, 150, 1001, 151), (66, 66, 198)):
             self.click(1062, 154)
     else:
         # 点击普通
-        while not ocr.check_rgb_similar(self, (700, 150, 701, 151), (88, 66, 46)):
+        while not color.check_rgb_similar(self, (700, 150, 701, 151), (88, 66, 46)):
             self.click(803, 156)
     # 开始扫荡
     start_scan(self)
@@ -57,7 +58,7 @@ def start_scan(self):
             # 点击入场
             self.click(*normal_position[tk['stage']])
         # 确认扫荡
-        rst = common.confirm_scan(self, tk)
+        rst = stage.confirm_scan(self, tk)
         if rst == 'return':
             return
         # 关闭任务信息

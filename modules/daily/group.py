@@ -1,5 +1,5 @@
-from modules import home
-from utils import ocr
+from common import ocr
+from modules.baas import home
 
 
 def start(self):

@@ -1,7 +1,7 @@
 import time
 
-from modules import home
-from utils import ocr
+from modules.baas import home
+from common import ocr, stage
 
 shop_position = {
     'general': (150, 150), 'arena': (150, 380)
@@ -52,7 +52,7 @@ def buy_goods(self):
         self.d.click(769, 484)
 
         # 关闭获得奖励
-        ocr.close_prize_info(self)
+        stage.close_prize_info(self)
 
         # 刷新功能 todo
 
