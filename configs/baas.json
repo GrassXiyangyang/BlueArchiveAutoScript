@@ -6,9 +6,13 @@
     },
     "cafe": {
         "enable": true,
-        "next": "2023-11-06 18:22:04",
+        "next": "2023-11-06 18:59:18",
         "end": "2099-12-31 23:59:59",
-        "interval": 3600
+        "interval": 3600,
+        "config": {
+            "my_preset": 1,
+            "blank_preset": 5
+        }
     },
     "shop": {
         "enable": true,
@@ -113,35 +117,13 @@
         "enable": false,
         "next": "2023-11-06 05:00:00",
         "end": "2099-12-31 23:59:59",
-        "config": [
-            {
-                "region": 14,
-                "stage": 1,
-                "count": 1
-            }
-        ]
+        "config": []
     },
     "hard_task": {
         "enable": false,
         "next": "2023-11-06 05:00:00",
         "end": "2099-12-31 23:59:59",
-        "config": [
-            {
-                "region": 13,
-                "stage": 3,
-                "count": 3
-            },
-            {
-                "region": 12,
-                "stage": 3,
-                "count": 3
-            },
-            {
-                "region": 11,
-                "stage": 3,
-                "count": 3
-            }
-        ]
+        "config": []
     },
     "make": {
         "enable": true,
@@ -169,13 +151,13 @@
     },
     "momo_talk": {
         "enable": true,
-        "next": "2023-11-06 18:23:33",
+        "next": "2023-11-06 18:49:58",
         "end": "2099-12-31 23:59:59",
         "interval": 3600
     },
     "arena": {
         "enable": true,
-        "next": "2023-11-06 18:23:47",
+        "next": "2023-11-06 18:56:05",
         "end": "2099-12-31 23:59:59",
         "interval": 3600,
         "config": {
@@ -185,19 +167,19 @@
     },
     "work_task": {
         "enable": true,
-        "next": "2023-11-06 18:23:54",
+        "next": "2023-11-06 18:56:20",
         "end": "2099-12-31 23:59:59",
         "interval": 3600
     },
     "mailbox": {
         "enable": true,
-        "next": "2023-11-06 18:24:00",
+        "next": "2023-11-06 18:56:30",
         "end": "2099-12-31 23:59:59",
         "interval": 3600
     },
     "restart": {
-        "enable": true,
-        "next": "2023-11-07 05:00:00",
+        "enable": false,
+        "next": "2023-11-05 18:56:15",
         "end": "2099-12-31 23:59:59"
     }
 }
