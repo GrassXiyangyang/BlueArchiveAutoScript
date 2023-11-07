@@ -1,9 +1,10 @@
-numpy~=1.26.0
+aircv==1.4.6
+cnocr==2.2.4.2
+fuzzywuzzy==0.18.0
+numpy==1.26.1
+opencv_python==4.8.0.74
 uiautomator2==2.16.23
-opencv-python==4.8.0.74
-cnocr>=2.2.4.1
-fuzzywuzzy~=0.18.0
-aircv~=1.4.6
-Pillow~=10.1.0
+onnxruntime
+opencv-python~=4.8.0.74
+PySide6~=6.6.0
 python-Levenshtein
-filelock~=3.13.0

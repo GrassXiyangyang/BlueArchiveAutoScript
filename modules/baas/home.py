@@ -1,8 +1,30 @@
 from common import ocr, image
-from common.iconst import *
-
-# 回到首页
+from common.iconst import SS_FILE
 from modules.baas import restart
+
+
+def load_data(self, ui):
+    try:
+        ui.run.clicked.disconnect()
+    except RuntimeError:
+        pass
+
+    ui.run.clicked.connect(self.call_save_config)
+    if self.running:
+        ui.run.setText("启动中...")
+        self.start_process()
+    else:
+        ui.run.setText("已停止")
+        self.stop_process()
+
+
+def save_config(self, ui):
+    if self.running:
+        ui.run.setText("已停止")
+    else:
+        ui.run.setText("启动中...")
+    self.running = not self.running
+    load_data(self, ui)
 
 
 def go_home(self):

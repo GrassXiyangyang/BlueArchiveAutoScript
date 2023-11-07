@@ -2,8 +2,8 @@ import time
 
 from fuzzywuzzy import fuzz
 
-from modules.baas import home
 from common import ocr, stage, color
+from modules.baas import home
 
 make_position = {
     1: (975, 279), 2: (975, 410), 3: (975, 551)
