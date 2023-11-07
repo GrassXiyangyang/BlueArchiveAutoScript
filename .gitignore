@@ -3,5 +3,3 @@
 .DS_Store
 **/runtime
 **__pycache__
-/configs/baas_desc.json
-/configs/baas2.json
