@@ -2,9 +2,14 @@ import traceback
 
 from common import process
 from common.baas import Baas
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, send_from_directory
 
 baas = Blueprint('baas', __name__, template_folder='templates')
+
+
+@baas.route('/static/<path:path>')
+def send_file(path):
+    return send_from_directory(baas.static_folder, path)
 
 
 @baas.route("/")
