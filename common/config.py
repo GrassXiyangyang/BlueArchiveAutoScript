@@ -1,35 +1,16 @@
 import json
-import sys
-
-from modules.baas import baas, home
 
 
-def get_config(self):
-    if len(sys.argv) < 2:
-        return 'baas.json'
-    return sys.argv[1]
+def config_path(con):
+    return './configs/{0}.json'.format(con)
 
 
-def config_path(self):
-    return './configs/{0}'.format(get_config(self))
-
-
-def load_ba_config(self):
-    with open(config_path(self), 'r', encoding='utf-8') as f:
+def load_ba_config(con):
+    with open(config_path(con), 'r', encoding='utf-8') as f:
         data = json.load(f)
-    self.bc = data
+    return data
 
 
-def save_ba_config(self):
-    with open(config_path(self), 'w', encoding='utf-8') as f:
-        f.write(json.dumps(self.bc, indent=4, ensure_ascii=False))
-
-
-load_map = {
-    'baas': baas.load_data,
-    'home': home.load_data,
-}
-save_map = {
-    'baas': baas.save_config,
-    'home': home.save_config
-}
+def save_ba_config(con, data):
+    with open(config_path(con), 'w', encoding='utf-8') as f:
+        f.write(json.dumps(data, indent=4, ensure_ascii=False))

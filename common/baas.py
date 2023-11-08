@@ -38,7 +38,8 @@ class Baas:
     bc: dict  # baas config BA配置
     tc: dict  # task config 任务配置
 
-    def __init__(self):
+    def __init__(self, con):
+        self.con = con
         self.load_config()
         self.d = u2.connect(self.bc['baas']['serial'])
         self.ocr = CnOcr()
@@ -101,9 +102,7 @@ class Baas:
                 sys.exit(0)
 
     def config_path(self):
-        if len(sys.argv) < 2:
-            return './configs/baas.json'
-        return './configs/{0}'.format(sys.argv[1])
+        return './configs/{0}.json'.format(self.con)
 
     def load_config(self):
         with open(self.config_path(), 'r', encoding='utf-8') as f:
@@ -130,6 +129,38 @@ class Baas:
             return ba_task, con
         return None, None
 
+    def task_schedule(self, is_running):
+        self.load_config()
+        running = []
+        waiting = []
+        queue = []
+        closed = []
+        for ba_task, con in self.bc.items():
+            # 被关闭的功能
+            if ba_task == 'baas':
+                continue
+            # 超出截止时间
+            task = {'next': con['next'], 'task': ba_task, 'text': con['text']}
+            if not con['enable'] or datetime.strptime(con['end'], "%Y-%m-%d %H:%M:%S") < datetime.now():
+                closed.append(task)
+                continue
+            # 时间未到
+            if datetime.strptime(con['next'], "%Y-%m-%d %H:%M:%S") > datetime.now():
+                waiting.append(task)
+                continue
+            # 第一个是正在运行
+            if is_running and len(running) == 0:
+                running.append(task)
+                continue
+            # 队列中
+            queue.append(task)
+
+        running.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
+        waiting.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
+        queue.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
+        closed.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
+        return {'running': running, 'waiting': waiting, 'queue': queue, 'closed': closed}
+
     def finish_task(self, fn):
         # 获取当前日期时间
         now = datetime.now()
@@ -145,7 +176,3 @@ class Baas:
         # 完成任务
         del self.tc["task"]
         self.save_config()
-
-
-if __name__ == '__main__':
-    Baas().dashboard()

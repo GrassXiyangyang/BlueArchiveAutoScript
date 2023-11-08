@@ -27,14 +27,16 @@ def start(self):
 def start_interactive(self):
     load_preset(self, self.tc['config']['blank_preset'])
     # 收起菜单
-    self.d.click(555, 622)
-    i = 2
+    self.d.sleep(0.2)
+    self.d.double_click(555, 622)
+    i = 3
     while i > 0:
         click_girl_plus(self, i)
         if ocr.screenshot_check_text(self, '好感等级提升', (473, 593, 757, 644), 3):
             # 关闭好感窗口,重新开始
-            self.d.click(651, 285)
-            i = 0
+            self.d.double_click(651, 285)
+            time.sleep(0.5)
+            i = 3
             continue
         i -= 1
     # 暂开菜单
@@ -126,14 +128,14 @@ def click_girl_plus(self, i):
     img2_data = np.array(after)
 
     diff_pixels_coords = np.where(img1_data != img2_data)
-    # 创建一个映射，键是每个像素点所在的100px区块的坐标，值是该区块中所有不同像素点的列表
+    # 创建一个映射，键是每个像素点所在的50px区块的坐标，值是该区块中所有不同像素点的列表
     blocks = defaultdict(list)
 
     for p in zip(*diff_pixels_coords):
         x = int(p[1])
         y = int(p[0])
         # 计算此像素所在的区块坐标
-        block_coord = (y // 100, x // 100)
+        block_coord = (y // 50, x // 50)
         blocks[block_coord].append((y, x))
 
     # 对于每个区块，保留中间的像素点
@@ -153,6 +155,7 @@ def click_girl_plus(self, i):
                 (y > 570 and x < 100) or (y > 570 and x > 770):
             continue
         finial.append(center_coord)
+    # 打乱坐标
     np.random.shuffle(finial)
     for p in finial:
         self.d.click(int(p[1]), int(p[0]))
