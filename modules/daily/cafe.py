@@ -45,43 +45,64 @@ def start_interactive(self):
 
 
 def load_preset(self, preset):
-    # 点击预设
+    open_preset_window(self, preset)
+    # 如果没有预设，创建一个空白预设
+    area = preset_position[preset]
+    if color.check_rgb_similar(self, (area[0], area[1], area[0] + 1, area[1] + 1), (101, 70, 45)):
+        self.d.click(*preset_position[preset])
+        confirm_load_preset(self)
+    else:
+        create_blank_preset(self, preset)
+
+
+def open_preset_window(self, preset):
+    # 等待右下角预设
     ocr.screenshot_check_text(self, '预设', (326, 656, 366, 677))
+    # 点击右下角预设
     self.click(360, 640)
+    # 等待预设弹窗加载
     ocr.screenshot_check_text(self, '预设', (604, 127, 678, 157))
     if preset > 3:
         self.d.swipe(933, 586, 933, 230)
         time.sleep(0.5)
 
-    # 如果没有预设，创建一个空白预设
-    area = preset_position[preset]
-    if color.check_rgb_similar(self, (area[0], area[1], area[0] + 1, area[1] + 1), (101, 70, 45)):
-        self.d.click(*preset_position[preset])
-    else:
-        create_blank_preset(self, preset)
-    # 等待加载
-    ocr.screenshot_check_text(self, '确认', (732, 482, 803, 518))
-    # 确认加载
-    self.d.click(771, 500)
-    # 关闭预设
-    self.d.double_click(934, 146)
-
 
 def create_blank_preset(self, preset):
-    area = preset_position[preset]
-    self.d.click(area[0] - 250, area[1])
-    # 等待加载
-    ocr.screenshot_check_text(self, '确认', (732, 482, 803, 518))
-    # 确认加载
-    self.d.click(771, 500)
-    # 关闭预设
-    self.d.double_click(934, 146)
+    # 把当前配置保存到空白预设
+    save_preset(self, preset)
     # 点击全部收纳
-    self.d.click(455, 642)
+    self.click(455, 642, False, 1, 0.5)
+    # 等待确认加载
+    ocr.screenshot_check_text(self, '确认', (732, 482, 803, 518))
+    # 确认收纳
+    self.d.click(769, 498)
+    # 重新打开预设
+    open_preset_window(self, preset)
+    # 保存预设
+    save_preset(self, preset)
     # 等待加载
     ocr.screenshot_check_text(self, '制造工坊', (732, 482, 803, 518), 0, 0, False)
     # 点击确认
     self.d.click(769, 498)
+
+
+def save_preset(self, preset):
+    area = preset_position[preset]
+    # 点击保存当前配置
+    self.d.click(area[0] - 250, area[1])
+    # 确认加载预设
+    confirm_load_preset(self)
+
+
+def confirm_load_preset(self):
+    # 等待加载
+    ocr.screenshot_check_text(self, '确认', (732, 482, 803, 518))
+    # 确认加载
+    self.d.click(771, 500)
+    # 等待预设弹窗加载
+    ocr.screenshot_check_text(self, '预设', (604, 127, 678, 157))
+    # 关闭预设
+    self.d.double_click(934, 146)
 
 
 def init_window(self):

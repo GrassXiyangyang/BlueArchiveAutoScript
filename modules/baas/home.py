@@ -36,13 +36,6 @@ def recursion_click_house(self, check_text=False, fail_count=0):
         if menu == "":
             self.d.click(355, 22)
             return recursion_click_house(self, False, fail_count + 1)
-
-    # 查看是否有首页按钮
-    ss = self.d.screenshot()
-    img = ss.crop((1218, 5, 1253, 40))
-    img.save(SS_FILE)
-    if not image.calc_image_mse(SS_FILE, "./assets/house.png"):
-        return False
     # 返回首页
     self.d.double_click(1233, 11)
     # 重新检查
