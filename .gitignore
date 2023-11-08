@@ -3,3 +3,4 @@
 .DS_Store
 **/runtime
 **__pycache__
+docs/

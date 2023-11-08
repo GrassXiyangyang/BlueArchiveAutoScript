@@ -1,11 +1,11 @@
 import time
 from collections import defaultdict
 import numpy as np
-from common import stage, ocr
+from common import stage, ocr, color
 from modules.baas import home
 
 preset_position = {
-    1: (867, 272), 2: (867, 403), 3: (867, 532), 4: (867, 396), 5: (867, 525)
+    1: (808, 263), 2: (808, 393), 3: (808, 533), 4: (812, 393), 5: (812, 523)
 }
 
 
@@ -52,13 +52,36 @@ def load_preset(self, preset):
     if preset > 3:
         self.d.swipe(933, 586, 933, 230)
         time.sleep(0.5)
-    self.d.click(*preset_position[preset])
+
+    # 如果没有预设，创建一个空白预设
+    area = preset_position[preset]
+    if color.check_rgb_similar(self, (area[0], area[1], area[0] + 1, area[1] + 1), (101, 70, 45)):
+        self.d.click(*preset_position[preset])
+    else:
+        create_blank_preset(self, preset)
     # 等待加载
     ocr.screenshot_check_text(self, '确认', (732, 482, 803, 518))
     # 确认加载
     self.d.click(771, 500)
     # 关闭预设
     self.d.double_click(934, 146)
+
+
+def create_blank_preset(self, preset):
+    area = preset_position[preset]
+    self.d.click(area[0] - 250, area[1])
+    # 等待加载
+    ocr.screenshot_check_text(self, '确认', (732, 482, 803, 518))
+    # 确认加载
+    self.d.click(771, 500)
+    # 关闭预设
+    self.d.double_click(934, 146)
+    # 点击全部收纳
+    self.d.click(455, 642)
+    # 等待加载
+    ocr.screenshot_check_text(self, '制造工坊', (732, 482, 803, 518), 0, 0, False)
+    # 点击确认
+    self.d.click(769, 498)
 
 
 def init_window(self):
@@ -97,8 +120,8 @@ def invite_girl(self):
 
 def get_cafe_money(self):
     # 查看收益
-    surplus = float(ocr.screenshot_get_text(self, (1095, 641, 1160, 671)))
-    if surplus == 0:
+    if not ocr.screenshot_check_text(self, "可获得", (1182, 570, 1242, 589), 0) \
+            and not ocr.screenshot_check_text(self, "已满!", (1182, 570, 1242, 589), 0):
         return
     # 点击咖啡厅收益
     self.click(1155, 645)
