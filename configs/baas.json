@@ -1,14 +1,26 @@
 {
     "baas": {
-        "text": "Baas设置",
-        "serial": "emulator-5554",
         "package": "com.RoamingStar.BlueArchive",
-        "ss_rate": 0.2
+        "serial": "emulator-5555",
+        "ss_rate": 0.1
+    },
+    "arena": {
+        "enable": true,
+        "text": "战术对抗赛",
+        "index": 0,
+        "next": "2023-11-08 23:46:26",
+        "end": "2099-12-31 23:59:59",
+        "interval": 3600,
+        "config": {
+            "less_level": 2,
+            "max_refresh": 10
+        }
     },
     "cafe": {
         "enable": true,
         "text": "咖啡厅",
-        "next": "2023-11-07 20:06:31",
+        "index": 1,
+        "next": "2023-11-08 23:23:04",
         "end": "2099-12-31 23:59:59",
         "interval": 3600,
         "config": {
@@ -19,7 +31,8 @@
     "shop": {
         "enable": true,
         "text": "商店购买",
-        "next": "2023-11-08 05:00:00",
+        "index": 2,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59",
         "config": [
             {
@@ -53,21 +66,22 @@
     "schedule": {
         "enable": true,
         "text": "日程",
-        "next": "2023-11-08 05:00:00",
+        "index": 3,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59",
         "config": [
             {
                 "schedule": "qxn",
                 "stage": [
-                    7,
-                    8
+                    2,
+                    3
                 ]
             },
             {
                 "schedule": "ghn",
                 "stage": [
-                    7,
-                    8
+                    6,
+                    7
                 ]
             },
             {
@@ -81,13 +95,15 @@
     "group": {
         "enable": true,
         "text": "小组",
-        "next": "2023-11-08 05:00:00",
+        "index": 4,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59"
     },
     "wanted": {
         "enable": true,
         "text": "通缉悬赏",
-        "next": "2023-11-08 05:00:00",
+        "index": 5,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59",
         "config": [
             {
@@ -110,7 +126,8 @@
     "special_entrust": {
         "enable": true,
         "text": "特殊委托",
-        "next": "2023-11-08 05:00:00",
+        "index": 6,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59",
         "config": [
             {
@@ -121,23 +138,48 @@
         ]
     },
     "normal_task": {
-        "enable": false,
+        "enable": true,
         "text": "扫荡普通关卡",
-        "next": "2023-11-06 05:00:00",
+        "index": 7,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59",
-        "config": []
+        "config": [
+            {
+                "region": 14,
+                "stage": 1,
+                "count": 1
+            }
+        ]
     },
     "hard_task": {
-        "enable": false,
+        "enable": true,
         "text": "扫荡困难关卡",
-        "next": "2023-11-06 05:00:00",
+        "index": 8,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59",
-        "config": []
+        "config": [
+            {
+                "region": 13,
+                "stage": 3,
+                "count": 3
+            },
+            {
+                "region": 12,
+                "stage": 3,
+                "count": 3
+            },
+            {
+                "region": 11,
+                "stage": 3,
+                "count": 3
+            }
+        ]
     },
     "make": {
         "enable": true,
         "text": "制造",
-        "next": "2023-11-08 05:00:00",
+        "index": 9,
+        "next": "2023-11-09 05:00:00",
         "end": "2099-12-31 23:59:59",
         "config": {
             "count": 1,
@@ -162,39 +204,33 @@
     "momo_talk": {
         "enable": true,
         "text": "MomoTalk",
-        "next": "2023-11-07 20:27:57",
+        "index": 10,
+        "next": "2023-11-08 23:24:04",
         "end": "2099-12-31 23:59:59",
         "interval": 3600
-    },
-    "arena": {
-        "enable": true,
-        "text": "战术对抗赛",
-        "next": "2023-11-07 20:33:35",
-        "end": "2099-12-31 23:59:59",
-        "interval": 3600,
-        "config": {
-            "less_level": 2,
-            "max_refresh": 10
-        }
     },
     "work_task": {
         "enable": true,
         "text": "工作任务",
-        "next": "2023-11-07 20:33:42",
+        "index": 11,
+        "next": "2023-11-08 23:24:12",
         "end": "2099-12-31 23:59:59",
         "interval": 3600
     },
     "mailbox": {
         "enable": true,
         "text": "领取邮箱",
-        "next": "2023-11-07 20:33:52",
+        "index": 12,
+        "next": "2023-11-08 23:24:22",
         "end": "2099-12-31 23:59:59",
         "interval": 3600
     },
     "restart": {
-        "enable": false,
+        "enable": true,
         "text": "定时重启",
-        "next": "2023-11-05 18:56:15",
-        "end": "2099-12-31 23:59:59"
+        "index": 999,
+        "next": "2023-11-08 23:29:31",
+        "end": "2099-12-31 23:59:59",
+        "interval": 3888
     }
 }

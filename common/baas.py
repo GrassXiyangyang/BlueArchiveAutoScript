@@ -86,15 +86,16 @@ class Baas:
         # 使用字典将字符串映射到对应的函数
 
         while True:
-            fn, tc = self.get_task()
+            fn, tc = self.task_schedule(True, True)
             if fn is None:
                 print("没有要执行的任务")
-                time.sleep(1)
+                time.sleep(3)
                 continue
             # 从字典中获取函数并执行
             if fn in func_dict:
                 self.tc = tc
                 self.tc['task'] = fn
+                self.finish_seconds = 0
                 func_dict[fn](self)
                 self.finish_task(fn)
             else:
@@ -114,22 +115,7 @@ class Baas:
         with open(self.config_path(), 'w', encoding='utf-8') as f:
             f.write(json.dumps(self.bc, indent=4, ensure_ascii=False))
 
-    def get_task(self):
-        self.load_config()
-        for ba_task, con in self.bc.items():
-            if ba_task == 'baas':
-                continue
-            if not con['enable']:
-                print("功能已关闭", ba_task, con, "\n")
-                continue
-            if datetime.strptime(con['end'], "%Y-%m-%d %H:%M:%S") < datetime.now():
-                continue
-            if datetime.strptime(con['next'], "%Y-%m-%d %H:%M:%S") > datetime.now():
-                continue
-            return ba_task, con
-        return None, None
-
-    def task_schedule(self, is_running):
+    def task_schedule(self, is_running, get_task=False):
         self.load_config()
         running = []
         waiting = []
@@ -140,7 +126,7 @@ class Baas:
             if ba_task == 'baas':
                 continue
             # 超出截止时间
-            task = {'next': con['next'], 'task': ba_task, 'text': con['text']}
+            task = {'next': con['next'], 'task': ba_task, 'text': con['text'], 'index': con['index']}
             if not con['enable'] or datetime.strptime(con['end'], "%Y-%m-%d %H:%M:%S") < datetime.now():
                 closed.append(task)
                 continue
@@ -149,28 +135,35 @@ class Baas:
                 waiting.append(task)
                 continue
             # 第一个是正在运行
+            if get_task:
+                return ba_task, con
             if is_running and len(running) == 0:
                 running.append(task)
                 continue
             # 队列中
             queue.append(task)
 
-        running.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
-        waiting.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
-        queue.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
-        closed.sort(key=lambda x: datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S"))
+        if get_task:
+            return None, None
+
+        waiting.sort(key=lambda x: (x['index'], datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S")))
+        queue.sort(key=lambda x: (x['index'], datetime.strptime(x['next'], "%Y-%m-%d %H:%M:%S")))
         return {'running': running, 'waiting': waiting, 'queue': queue, 'closed': closed}
 
     def finish_task(self, fn):
+        self.load_config()
         # 获取当前日期时间
         now = datetime.now()
-        # 计算下次执行时间
-        if 'interval' in self.tc:
-            future = now + timedelta(seconds=self.tc['interval'])
+        if self.finish_seconds > 0:
+            future = now + timedelta(seconds=self.finish_seconds)
         else:
-            future = now + timedelta(days=1)
-            # 别问我为什么要写5点 :)
-            future = datetime(future.year, future.month, future.day, 5, 0)
+            # 计算下次执行时间
+            if 'interval' in self.tc:
+                future = now + timedelta(seconds=self.tc['interval'])
+            else:
+                future = now + timedelta(days=1)
+                # 别问我为什么要写5点 :)
+                future = datetime(future.year, future.month, future.day, 5, 0)
         # 将datetime对象转成字符串
         self.bc[fn]['next'] = future.strftime("%Y-%m-%d %H:%M:%S")
         # 完成任务

@@ -1,5 +1,4 @@
-from common import ocr, image
-from common.iconst import SS_FILE
+from common import ocr
 from modules.baas import restart
 
 

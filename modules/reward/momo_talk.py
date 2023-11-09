@@ -89,7 +89,7 @@ def good_story(self, position):
 
 def check_message(self):
     # 检查文字是否发生变动
-    out = ocr.screenshot_cut(self, (774, 196, 1123, 603), 99999, False)
+    out = ocr.screenshot_cut_get_text(self, (774, 196, 1123, 603), 99999, False)
     if len(out) == 0:
         self.mm_i += 1
         return

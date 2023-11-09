@@ -1,7 +1,7 @@
 import os
 import time
 from fuzzywuzzy import fuzz
-from common import stage
+from common import stage, image
 from common.iconst import *
 
 
@@ -27,26 +27,13 @@ def screenshot_get_text(self, area, ocr=None, wait=99999, i=0):
     return out[i]['text']
 
 
-def screenshot_cut(self, area, before_wait=0, need_loading=True):
-    if before_wait > 0:
-        time.sleep(before_wait)
-    # 检查文字前，等待加载完成
-    if need_loading:
-        stage.wait_loading(self)
-    # 创建目录
-    if not os.path.exists(SS_PATH):
-        os.makedirs(SS_PATH)
-    if len(area) == 0:
-        self.d.screenshot(SS_FILE)
-    else:
-        ss = self.d.screenshot()
-        img = ss.crop(area)
-        img.save(SS_FILE)
+def screenshot_cut_get_text(self, area, before_wait=0, need_loading=True):
+    image.screenshot_cut(self, area, before_wait, need_loading)
     return self.ocr.ocr(SS_FILE)
 
 
 def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0, need_loading=True):
-    out = screenshot_cut(self, area, before_wait, need_loading)
+    out = screenshot_cut_get_text(self, area, before_wait, need_loading)
     ex = any(map(lambda d: fuzz.ratio(d.get('text'), text) > 60, out))
     print("判断是否 为", text, "结果", ex)
     print("\t\t\t", out)
@@ -60,7 +47,7 @@ def screenshot_check_text(self, text, area=(), wait=99999, before_wait=0, need_l
 
 
 def screenshot_get_position(self, text, area=(), wait=99999, before_wait=0, need_loading=True):
-    out = screenshot_cut(self, area, before_wait, need_loading)
+    out = screenshot_cut_get_text(self, area, before_wait, need_loading)
     print("\t\t\t", out)
     for t in out:
         if fuzz.ratio(t.get('text'), text) <= 60:

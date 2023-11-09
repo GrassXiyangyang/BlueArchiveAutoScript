@@ -1,7 +1,9 @@
 import time
 
-from common import ocr, color, stage
+from common import ocr, color, stage, image, iconst
 from modules.baas import home
+
+finish_seconds = 55
 
 
 def start(self):
@@ -17,12 +19,9 @@ def start(self):
     # 等待加载
     ocr.screenshot_check_text(self, '战术对抗赛', (102, 6, 248, 41))
 
-    # 检测已有冷却... todo
-
     # 开始战斗
-    fight(self)
-    # 领奖
-    get_prize(self)
+    start_fight(self)
+
     # 回到首页
     home.go_home(self)
 
@@ -40,15 +39,17 @@ def get_prize(self):
         stage.close_prize_info(self)
 
 
-def fight(self, wait=False):
+def start_fight(self, wait=False):
     # 检查余票
     surplus = ocr.screenshot_get_text(self, (189, 475, 229, 498))
     if surplus == '0/5':
         print("没票了")
-        return
-    if wait:
-        # 战斗等待1分钟
-        time.sleep(52)
+        get_prize(self)
+        return True
+    # 检测已有冷却
+    if wait or not image.compare_image(self, (153, 516, 212, 535), 'jjc_wait_time', 0, False):
+        self.finish_seconds = finish_seconds
+        return False
     # 选择对手
     choose_enemy(self)
     # 编队
@@ -59,18 +60,14 @@ def fight(self, wait=False):
     time.sleep(3)
     # 出击
     self.double_click(1175, 665, True, 1, 1)
-    # 等待结果
-    ex, position = ocr.screenshot_get_position(self, '确认', (550, 439, 733, 567))  # 确认战斗结果
-    if ex:
-        # 确认结果
-        self.click(position[1][0] + 520, position[1][1] + 455)
-    for i in range(2):
-        # 确认排名升级
-        if ocr.screenshot_check_text(self, '确认', (555, 516, 733, 567), 5):
-            # 确认结果
-            self.click(646, 526)
-    # 重新战斗
-    fight(self, True)
+    while True:
+        # 检查有没有出现ID
+        if image.compare_image(self, (476, 424, 496, 442), 'jjc_id', 0, False):
+            break
+        # 关闭弹窗
+        self.d.click(1235, 82)
+        time.sleep(self.bc['baas']['ss_rate'])
+    start_fight(self, True)
 
 
 def choose_enemy(self):
@@ -79,9 +76,10 @@ def choose_enemy(self):
     my_lv = float(ocr.screenshot_get_text(self, (165, 215, 208, 250), self.ocrNum))
     refresh = 0
     while True:
-        # 超出最大次数,直接开始
+        # 超出最大次数,敌人预期等级-1
         if refresh > self.tc['config']['max_refresh']:
-            break
+            less_level -= 1
+            continue
         # 识别对手等级
         enemy_lv = float(ocr.screenshot_get_text(self, (551, 298, 581, 317), self.ocrNum))
         print("对手等级 ", enemy_lv)

@@ -1,7 +1,7 @@
 import unittest
 import uiautomator2 as u2
 from cnocr import CnOcr
-from common import ocr, color
+from common import ocr, image, iconst
 
 
 class TestMain(unittest.TestCase):
@@ -20,3 +20,10 @@ class TestMain(unittest.TestCase):
 
         # print(color.check_rgb_similar(self, (1022, 634, 1023, 635), (61, 219, 250)))
         # ocr.check_rgb_similar(self, (700, 150, 701, 151), 0)
+
+    def test_ss2(self):
+        path = "../../assets"
+        # file = "../../assets/jjc_wait_time.png"
+        # image.screenshot_cut(self, (153, 516, 212, 535), 0, False, path, file)
+        file = "../../assets/jjc_id.png"
+        image.screenshot_cut(self, (476, 424, 496, 442), 0, False, path, file)
